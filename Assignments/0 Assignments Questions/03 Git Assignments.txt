@@ -1,0 +1,63 @@
+Assignments:
+1. Use git tag to create and manage tags.
+2. Compare git revert vs git reset vs git restore.
+3. Create a pull request, add collaborators, and get reviews.
+4. Understand GitHub Actions for CI/CD. --> this can be ignored for now
+
+===================================================================
+Task1: Branching & Merging
+
+•	Initialize a new Git repo called git_practice.
+•	Create a new branch feature/login.
+•	Add a file [login.sh](http://login.sh/) and commit changes.
+•	Switch to main, create another file [readme.md](http://readme.md/), and commit.
+•	Merge feature/login into main.
+•	Resolve any merge conflicts if they occur.
+•	Push all branches to GitHub.
+
+Task2: Revert & Reset
+•	Create a Git repo git_reset_revert_demo.
+•	Add 3 commits by modifying a file demo.txt.
+•	Use git log to identify commit hashes.
+•	Use git revert to undo the second commit without removing history.
+•	Then use git reset --hard to go back to the first commit.
+•	Push final repo to GitHub and share screenshot of git log --oneline.
+
+Task3: Git Stash Scenario
+•	Create a repo stash_practice.
+•	Modify two files and don’t commit them.
+•	Run git stash to temporarily save your work.
+•	Switch to a new branch bugfix and make a new commit.
+•	Return to main and apply your stash using git stash apply.
+•	Push final code and share output of git stash list.
+
+Task4: Cherry-pick Practice
+•	Create repo cherrypick_demo.
+•	Create a branch featureA and make 3 commits.
+•	Switch to main and cherry-pick only the 2nd commit from featureA.
+•	Verify using git log that only that commit was added.
+•	Push to GitHub and share screenshots of logs before & after cherry-pick.
+
+Task5: Rebase Scenario
+•	Create a repo rebase_practice.
+•	Create branches main and feature/db.
+•	Add a few commits in both branches.
+•	Rebase feature/db on top of main.
+•	Resolve any conflicts and complete the rebase.
+•	Push both branches and share git log --graph --oneline --all.
+
+Task6: Tagging & Release
+•	Create a repo release_versioning.
+•	Make 3 commits (v1 feature, v2 feature, v3 feature).
+
+•	Tag each commit as v1.0, v2.0, v3.0.
+•	Push all tags to GitHub.
+•	Share output of git tag -l and screenshot from GitHub showing releases.
+
+Task7: Git Collaboration Simulation
+•	Create a new repo on GitHub and clone it locally.
+•	Create a branch feature/api.
+•	Make some commits, push to GitHub, and open a Pull Request (PR).
+•	Merge the PR using GitHub UI.
+•	Pull changes back to your local repo and verify.
+•	Share link to the PR and output of git branch -a.
