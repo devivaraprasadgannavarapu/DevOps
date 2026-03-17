@@ -1,0 +1,652 @@
+Linux:-
+
+Linux is a open-source, Unix-like operating systems 
+that is based on the Linux kernel and 
+known for its stability, security, and flexibility.
+
+EC2 Instance:-
+
+An EC2 instance is a virtual server in the cloud 
+that you can rent from Amazon Web Services (AWS) to run your applications. 
+It provides resizable compute capacity
+---------------------------------------------------------------------------------------------------------------
+
+Difference between TCP and UDP?
+
+TCP is connection-oriented protocol that ensure reliable data delivery. slower delivery
+used in:- SSH → Port 22
+	HTTP → Port 80
+	HTTPS → Port 443
+	FTP → Port 21
+	MySQL → Port 3306
+
+UDP is connectionless and faster but does not guarantee data delivery.
+used in:- DNS → Port 53
+	Video streaming
+	Online gaming
+	VoIP calls
+---------------------------------------------------------------------------------------------------------------
+
+Linux Commands
+
+Creating Files and Directories
+
+touch <file-name> --> TO create a file
+mkdir <directory-name> --> To create a directory
+--------------------------------------------------------------------------------------------------------------
+Listing Files and Directories
+
+ls --> To list all the files and directories in the present working directory
+ls -l --> To list all files and directories in long format
+ls -lt --> To sort the files and directories by their modified time
+ls -lrt --> TO sort by modified time in reverse order
+--------------------------------------------------------------------------------------------------------------
+To check the current directory
+
+pwd --> Print Working Directory
+--------------------------------------------------------------------------------------------------------------
+Change Directory:
+
+cd <directory-name> --> To change or get inside a directory
+cd .. --> To go back to one previous directory
+cd --> To goto home path of the user [/home/ec2-user]
+--------------------------------------------------------------------------------------------------------------
+VI - Text Editor
+
+vi <file-name> --> To open a file for editing using VI Editor
+
+Note: By default the VI Editor opens in command mode
+
+esc --> To goto command mode
+i --> To goto insert mode
+
+esc + :w --> To save the file
+esc + :q --> To quit from the file
+esc + :q! --> To quit from the without saving it
+esc + :wq --> To save and quit from the file
+
+w -- Write
+q -- Quit
+! -- Override [Forcefully]
+--------------------------------------------------------------------------------------------------------------
+cat <file-name> --> To see the contents of the file
+cat -n <file-name> --> To see the contents of the file along with reference numbers
+--------------------------------------------------------------------------------------------------------------
+To Set Reference Numbers in VI:
+
+esc + :set nu --> To set the reference numbers
+esc + :set nonu --> To remove the reference numbers
+--------------------------------------------------------------------------------------------------------------
+To search for Strings/Patterns in VI
+
+esc + /<pattern> --> To search for strings or patterns
+esc + /\c<pattern> --> To search by ignoring the case
+--------------------------------------------------------------------------------------------------------------
+Find and Replace in VI Editor
+
+esc + %s/<old-pattern>/<new-pattern>/igc --> To find and replace a word
+
+% -- All lines of the file
+s -- Substitute
+i -- Ignore Casing
+g -- Global Replace [Replace all occurences of the word in the line]
+c -- Ask for confirmation [y - confirm, n - Skip, q - quit, a - replace all]
+
+esc + :3s/<old-pattern>/<new-pattern>/g --> To only replace on the 3rd line
+esc + :3,6s/<old-pattern>/<new-pattern>/g --> To only replace on from 3rd to 6th line
+esc + :3,$s/<old-pattern>/<new-pattern>/g --> To only replace on from 3rd line to end of the file
+--------------------------------------------------------------------------------------------------------------
+esc + :undo --> To undo the changes
+esc + :redo --> To redo the changes
+--------------------------------------------------------------------------------------------------------------
+esc + dd --> To delete the current line where cursor is located
+esc + 3dd --> To delete 3 lines from the cursor location
+
+esc + :3d --> To delete the 3rd line of the file
+esc + :3,6d --> To delete from line 3 to 6
+esc + :3,$d --> To delete from line 3 to end of the file
+esc + :%d --> To delete all the lines
+--------------------------------------------------------------------------------------------------------------
+head - Used to print required number of lines from the beginning of the file
+
+head <file-name> --> To print the first 10 lines of the file
+head -6 <file-name> --> To print the first 6 lines of the file 
+--------------------------------------------------------------------------------------------------------------
+Tail - Used to print required number of lines from the end of the file
+
+tail <file-name> --> To print the last 10 lines of the file
+tail -6 <file-name> --> To print the last 6 lines of the file
+--------------------------------------------------------------------------------------------------------------
+Less - Used to view contents of the files interactively
+
+less <file-name> --> View contents of the file with less
+less -N <file-name> --> View contents of the file with reference numbers
+
+f - To go one page forward
+b - To go one page backward
+q - To quit from less command
+--------------------------------------------------------------------------------------------------------------
+Man Pages and Help
+
+man <command> --> TO see the manual page of the command 
+<command> --help --> To get a brief summary on how to use the command
+--------------------------------------------------------------------------------------------------------------
+Copy Move and Remove
+
+Copy Files and Directories
+
+cp <original-file-path> <new-file-path> --> To copy a file
+cp -r <original-directory-path> <new-directory-path> --> To copy a directory
+
+cp <original-file-path> <directory-path>/ --> To copy a file inside a directory with the original file name
+cp <original-file-path> <directory-path>/<new-file-name> --> To copy a file inside a directory with the new file name
+
+Examples:
+
+cp sample-0.0.0.jar app.jar
+cp app.jar app/
+--------------------------------------------------------------------------------------------------------------
+Move Files and Directories
+
+mv <original-file-path> <new-file-path> --> To move a file
+mv <original-directory-path> <new-directory-path> --> To move a directory
+
+mv <original-file-path> <directory-path>/ --> To move a file inside a directory with the original file name
+mv <original-file-path> <directory-path>/<new-file-name> --> To move a file inside a directory with the new file name
+
+Examples:
+
+mv sample-0.0.0.jar app.jar
+mv app.jar app/
+--------------------------------------------------------------------------------------------------------------
+Remove Files and Directories
+
+rm <file-name> --> To remove a file
+rm -r <directory-name> --> To remove a directory
+
+Using Wildcards:
+
+rm test* --> To remove all file that start with name [test]
+rm *.sh --> To remove all files that end with [.sh]
+rm a*.sh --> To remove all files that start with letter [a] and end with [.sh]
+rm -r test* --> To remove all files and directories that start with [test]
+--------------------------------------------------------------------------------------------------------------
+ECHO -- Print
+
+echo <Text> --> To print the text on the terminal
+
+Examples:
+
+echo "Hello" --> To print hello
+
+echo -e "Hello \nHow are You" --> To print in new lines using \n escape backslash character
+--------------------------------------------------------------------------------------------------------------
+Redirect [>] and Append [>>]
+
+<command> > <file-name> --> Redirect sends output to a file and overwrites existing content.
+
+Example:
+
+echo "hello" > test.txt --> To store the output of the echo command to the file test.txt
+
+<command> >> <file-name> --> Append adds output to the end of a file without deleting existing content. 
+
+Example:
+
+echo "how are you" > test.txt --> To append the output of the echo command to the file test.txt [Text gets added to the end of the file]
+--------------------------------------------------------------------------------------------------------------
+Pipe [|]
+
+<command> | <command> --> To pass the output of a command as input to another command
+
+Example:
+
+head -10 test.txt | tail -4 --> To print lines 6 to 10 in the file
+head -10 test.txt | tail -1 --> To print the 10th line of the file
+head -10 test.txt | wc -w --> To print the total number of words in the first 10 lines of the file
+--------------------------------------------------------------------------------------------------------------
+Word Count [wc]
+
+wc <file-name> --> To print the total number of lines, words, characters in a file
+
+wc -l <file-name> --> To print the number of lines in a file
+wc -w <file-name> --> To print the number of words in a file
+wc -c <file-name> --> To print the number of characters in a file
+--------------------------------------------------------------------------------------------------------------
+Find - To search for files and directories
+
+find -name <file/dir name> --> To search for files and directories by their name
+find -iname <file/dir name> --> To search for files and directories by their name with case ignored
+
+find <path> -name <file/dir name> --> To search for files and directories by their name in a particular path
+
+find -type f -name <file-name> --> To search for only files
+find -type d -name <dir-name> --> To search for only Directories
+
+Examples:
+
+find -type f -name script.sh --> To search for the file script.sh in current directory and its sub directories
+find scripts -type f -name init.sh --> To search for the file init.sh in scripts directory
+--------------------------------------------------------------------------------------------------------------
+find -mtime -7 --> Find all the files and directories created in the last 7 days
+find -mtime +7 --> Find all the files and directories created more than 7 days ago
+
+find -maxdepth 1 -name <file/dire name> --> To search for files and directories only in the current directory
+--------------------------------------------------------------------------------------------------------------
+Assignment:
+
+Find all the files that got created in the last 6 hours
+find -type f -mmin -360
+
+Find all the files that got created in the last 30 minutest
+find -type f -mmin -30
+
+Find all the empty files
+find -type f -empty
+
+Find all the empty files and delete them
+find -type f -empty -delete
+
+Find all the files that have a size of more than 1 MB
+find -type f -size +1M
+--------------------------------------------------------------------------------------------------------------
+File and Disk Size
+
+df -h --> To check the disk size and usage
+
+du -h <file/dir name> --> To check the disk usage of a file or a directory
+
+stat -c %s <file/dire name> --> To check the real disk usage of a file or directory in bytes
+--------------------------------------------------------------------------------------------------------------
+Grep - Used to search for strings/patterns inside files
+
+grep "<string>" <file-name> --> To print all the lines with the matching string in the file
+
+grep -i "<string>" <file-name> --> To print all the lines with the matching string by ignoring the case
+
+grep -n "<string>" <file-name> --> To print all the lines with the matching string along with their line numbers
+
+grep -e "<string>" -e "<string>" <file-name> --> To search for multiple strings 
+
+grep -lR "<string>" --> To display the names of the files which contain the matching string
+
+grep -rL "<string>" --> Find the grep option that displays the files that do not container the matching string
+
+grep -v "<string>" <file-name> --> To print all the lines without the matching string in the file
+
+grep "^<string>" <file-name> --> To print all the lines with the matching string at the start of the line
+
+grep "<string>$" <file-name> --> To print all the lines with the matching string at the end of the line
+
+grep -L "<string>" <file-name> --> To print the file name that contains string if it contain it wont print that file name if it contain it will show the file name
+
+grep -c "^$" <file-name> --> print number of empty lines in a file
+--------------------------------------------------------------------------------------------------------------
+
+sed - Stream Editor - Find/Replace, Print, Delete etc
+
+-- Find and Replace Strings
+
+sed 's/<old-string>/<new-string>/ig' <file-name> --> To find and replace the strings [File does not get modifed]
+
+s -- Substitute
+g -- global
+i -- Ignore the Casing
+
+sed -i 's/<old-string>/<new-string>/ig' <file-name> --> To insert the changes to the file
+
+sed '3s/<old-string>/<new-string>/ig' <file-name> --> TO find and replace only on the 3rd line
+sed '3,6s/<old-string>/<new-string>/ig' <file-name> --> TO find and replace only from 3rd line to 6th line
+sed '3,$s/<old-string>/<new-string>/ig' <file-name> --> TO find and replace only from 3rd line to end of the file
+--------------------------------------------------------------------------------------------------------------
+-- Delete Lines
+
+sed '3d' <file-name> --> To delete the 3rd line of the file
+sed '3,6d' <file-name> --> To delete from 3rd line to 6th line of the file
+sed '3,$d' <file-name> --> To delete from 3rd line to end of the file
+sed '3d;6d' <file-name> --> To delete the 3rd and 6th line
+--------------------------------------------------------------------------------------------------------------
+-- Print Lines
+
+sed -n '3p' <file-name> --> To print the 3rd line of the file
+sed -n '3,6p' <file-name> --> To print from 3rd line to 6th line of the file
+sed -n '3,$p' <file-name> --> To print from 3rd line to end of the file
+sed -n '3p;6p' <file-name> --> To print the 3rd and 6th line
+--------------------------------------------------------------------------------------------------------------
+Cut - Used to cut the data along the column
+
+cut -d " " -f3 <file-name> --> To print the 3rd column of the file
+cut -d " " -f3-6 <file-name> --> To print from 3rd to 6th columns of the file
+cut -d " " -f3,6 <file-name> --> To print 3rd and 6th columns of the file
+
+d - Delimiter [Used to specify the seperator between the columns]
+f - fields
+--------------------------------------------------------------------------------------------------------------
+AWK - Cut the file column and row wise
+
+awk '{print}' <file-name> --> To print the contents of the file
+
+awk -F " " '{print$3}' <file-name> --> To print the 3rd column of the file
+awk -F " " '{print$3,$6}' <file-name> --> To print 3rd and 6th columns of the file
+
+awk -F " " '{print$NF}' <file-name> --> To print the last column of the file
+awk -F " " '{print$(NF-1)}' <file-name> --> To print the last but one column of the file
+
+awk -F " " '{print NF}' <file-name> --> To print the total number of columns in each row of the file
+
+F - Field Seperator [Space is the default Field Seperator]
+NF - Number of fields [Columns]
+
+awk 'NR==3{print}' <file-name> --> To print 3rd row or line of the file
+awk 'NR==3,NR==6{print}' <file-name> --> To print from 3rd to 6th row of the file
+awk 'NR==3;NR==6{print}' <file-name> --> To print from 3rd and 6th row of the file
+
+awk 'END{print NR}' <file-name> --> To print the total number of rows in the file
+
+NR - Number of Rows
+--------------------------------------------------------------------------------------------------------------
+SUDO - Super User Does
+
+Sudo gives permissions for users to execute commands as root or super user
+
+sudo <command> --> To execute a command as root user
+
+Example:
+
+sudo yum install unzip --> To install the package unzip on the server
+
+To give an user the sudo permission - THe user needs to be added to the sudoers file
+
+sudo visudo /etc/sudoers --> TO edit the sudoers file safely
+
+To give an user Sudo Permission in the sudoers file
+<username> ALL=(ALL) NOPASSWD: ALL
+
+To give a group Sudo Permission in the sudoers file
+%<groupname> ALL=(ALL) NOPASSWD: ALL
+--------------------------------------------------------------------------------------------------------------
+Adding Users:
+
+sudo useradd <username> --> TO create an user
+sudo passwd <username> --> To set a password for an user
+
+sudo userdel <username> --> To delete the user
+sudo userdel -r <username> --> To delete the user along with his home directory
+
+Switch Users:
+
+su <username> --> To switch to a particular user [Password Authentication is required]
+sudo su <username> --> To switch without password auth
+
+sudo su - --> To switch to root user
+
+getent passwd or cat /etc/passwd --> To see all the users on the server
+--------------------------------------------------------------------------------------------------------------
+Adding Groups:
+
+sudo groupadd <groupname> --> To create a group
+sudo groupdel <groupname> --> To delete a group
+
+sudo gpasswd -a <username> <groupname> --> To add an user to a group
+sudo gpasswd -d <username> <groupname> --> To remove an user from a group
+
+getent group (or) cat /etc/group --> To see all the groups on the server
+--------------------------------------------------------------------------------------------------------------
+Permissions in Linux:
+
+r - Read Permission
+w - Write Permission
+x - Executable Permission
+
+rw-     r--     r--
+[Owner] [Group] [Others]
+
+r - 4
+w - 2
+x - 1
+- - 0
+--------------------------------------------------------------------------------------------------------------
+Change Permissions:
+
+chmod 644 <file-name> --> To give owner rw, Group r and Others r permissions
+chmod 764 <file-name> --> To give owner rwx, Group rw and Others r permissions
+chmod 400 <file-name> --> To give owner r, Group - and Others - permissions
+chmod 600 <file-name> --> To give owner rw, Group - and Others - permissions
+
+chmod -R <permission-number> <dir-name> --> To change permissions for a directory
+
+chmod u+x <file-name> --> To add executable permission for user/owner
+chmod o+rw <file-name> --> To add Read and write permissions for Others
+chmod g-w <file-name> --> TO remove write permission for Group
+chmod u+x,g+w,o+rw --> To add execute permission for user, Write permission for Group and Read + Write permission to Others
+
+u - User/Owner
+g - Group
+o - Others
+--------------------------------------------------------------------------------------------------------------
+Change Ownership and Groups for Files and Directories
+
+chown <username> <file-name> --> To change the owner of the file
+chgrp <groupname> <file-name> --> To change the group of the file
+
+chown <username>:<groupname> <file-name> --> To change both owner and group of the file
+--------------------------------------------------------------------------------------------------------------
+Sticky bit:- is a special permission used on directories that allows users to create files but prevents them from deleting files owned by other users. 
+It is commonly used on /tmp directory.
+
+
+set:- chmod +t directory_name
+remove:- chmod -t directory_name
+
+Default Permissions:
+
+Files - 666
+Directories - 777
+
+UMASk :- umask is a command used to set default file and directory permission in Linux.
+config file :- /etc/login.defs
+
+umask 022 --> To change the default permissions of files to 644 and directories to 755
+umask 002 --> To change the default permissions of files to 664 and directories to 775
+umask 066 --> To change the default permissions of files to 600 and directories to 711
+--------------------------------------------------------------------------------------------------------------
+Miscellaneous Commands:
+
+who --> To check all the logged in users
+whoami --> To check the current user
+id --> To check the current user's UID, GID and the groups the user belongs to
+
+uname --> To check the OS
+uname -a --> To check more information about the server like Kernel Version, Architecture etc
+
+ip addr ---> Used to check IP address
+hostname -I ---> private ip address
+hostname ---> Shows system hostname.
+
+wget ---> Download files from internet.
+
+ping <hostname/ip/website> --> TO check and ping another server
+
+ifconfig ---> Shows network configurations.
+
+Netstat - To check the information about ports
+sudo netstat -tulnp --> (or) ss -tulnp --->  To check which process/PID is using which port
+t → TCP
+u → UDP
+l → listening ports
+n → numeric
+p → process
+
+nslookup ---> Display IP address of a domain
+
+dig ---> Shows detailed DNS info.
+
+rout ---> show routing table
+
+telnet ---> Connect to remote servers, Test open ports, Troubleshoot network connectivity
+
+traceroute ---> Display rout taken by the packets.
+
+curl ---> Used to test web server connectivity.
+
+cat /etc/os-release --> To check the information about the linux distribution of the server
+
+-----------------------------------------------------------------------------------------------------------------
+How do you restrict users or processes in Linux?
+
+We can restrict users using file permissions, sudo access, disabling login shell, and SSH configuration.
+
+We can restrict processes using ulimit, nice, renice, and cgroups to control CPU and memory usage.
+
+How to restrict a perticular user from accessing particular file or directory
+---> setfacl -m u:username:permissions file_name
+
+--------------------------------------------------------------------------------------------------------------
+tee - Redirect and Append
+
+<command> | tee <filename> --> To redirect the output of a command to a file and also print the output on the terminal
+<command> | tee <filename1> <filename2> --> To redirect output to multiple files
+<command> | tee -a <filename> --> To append
+
+Example:
+
+echo hello | tee file.txt
+--------------------------------------------------------------------------------------------------------------
+Link - To create a shortcut for a file or directory
+
+ln <original-file-path> <hardlink-path> --> To create a hard link
+ln -s <original-file-path> <softlink-path> --> To create a soft/symbolic link
+
+Example:
+
+ln -s d1/d2/d3/d4/original softlink
+
+A softlink will point to the path of the original file. As soon as the original file get removed or moved - The softlink stops working
+
+Whereas the hardlink directly points to the memory location of the original file. Even if the original file gets removed or moved, the hardlink will still work
+
+HardLink Only works for files, Whereas softlink can be used for directories as well
+--------------------------------------------------------------------------------------------------------------
+inode - It is an unique identification number of the file pointing to its memory location
+
+ls -i --> To check the inode of the files and directories
+--------------------------------------------------------------------------------------------------------------
+PS - Process
+
+ps -ef --> To list all the process from all users running on the server
+ps -u <username> --> To list process started by an user
+
+show top 5 processes --> ps aux --sort=-%mem | head -n6
+----------------------------------------------------------------------------------
+
+kill <PID> --> To terminate a process [Signal 15]
+Terminating a process means stopping a running program gracefully.
+
+The process gets a signal and has a chance to:
+*save data
+*close files properly
+*exit safely
+
+kill -9 <PID> --> To Forcefully kill a process
+Forcefully killing a process means immediately stopping a process without giving it time to save or clean up.
+--------------------------------------------------------------------------------------------------------------
+top --> TO check all the process, CPU, Memory usage in a live interactive dashboard
+
+k -- To kill a process by its PID
+u -- TO check the process started by an users
+q -- Quit from TOP Command
+
+Load Average → shows the average number of processes that are running or waiting for CPU (and uninterruptible I/O) in the system.  
+	uptime → Used to check load average 
+➡ The three load average values represent system load for 1, 5 and 15 minutes respectively. 
+--------------------------------------------------------------------------------------------------------------------------
+
+Swap Memory → Swap memory is a space on the hard disk used as virtual memory when RAM is full.
+		It helps the system continue running even when physical RAM is insufficient.
+
+sudo fallocate -l 8G /swapfile --> to crate swap memory
+sudo chmod 600 /swapfile --> change permission to enable swap memory
+sudo mkswap /swapfile --> to create swap header
+sudo swapon /swapfile --> turn on the swap memory
+
+free -h --> TO check system memory usage
+
+--------------------------------------------------------------------------------------------------------------
+Managing Services:
+
+--Service
+A service is a background program that runs continuously to provide specific functions to the system or users.
+Services are also called daemons.
+They usually start automatically when the system boots.
+---------------------------------------------------------------------------------------------------------------
+
+service <service-name> status --> TO check the status of a service
+sudo service <service-name> stop --> To stop a service
+sudo service <service-name> start --> To start a service
+
+--SystemCTL
+
+systemctl status <service-name>  --> TO check the status of a service
+sudo systemctl stop <service-name> --> To stop a service
+sudo systemctl start <service-name> --> To start a service
+
+Example:
+
+service sshd status
+sudo systemctl stop docker
+--------------------------------------------------------------------------------------------------------------
+SSH -- Secure SHell or Secure Socket Shell
+
+SSH is a network protocol that enables an user to access a remote server in a secure way
+
+Default Port - 22
+
+Jenkins -- 8080
+Tomcat -- 8080
+HTTP -- 80
+HTTPS -- 443
+Nginx -- 80
+Kubernetes API Server -- 6443
+
+Port: A port is a virtual point where network connections start and end
+
+SSH Commands:
+
+ssh -i <private-key> <username>@<ip-address> --> To ssh into a server
+
+Example:
+
+ssh -i private-key ubuntu@172.31.36.45
+--------------------------------------------------------------------------------------------------------------
+SSH Passwordless Connection
+
+To establish a passwordless connection, Generate a key pair using ssh-keygen command. 
+Copy the contents of the newly generated public key to the authorized keys file of the remote server under .ssh folder.
+
+ssh <username>@<ip-address> --> To SSH without provided key file 
+
+Example:
+
+ssh ubuntu@172.31.36.45
+--------------------------------------------------------------------------------------------------------------
+SCP - Copy Files over SSH
+
+scp -i <private-key> <file/dir> <username>@<ip-address>:<destination-path> --> To copy a file or directory to remote server using ssh protocol
+scp <file/dir> <username>@<ip-address>:<destination-path> --> To copy a file or directory to remote server using ssh protocol without password
+
+Example:
+
+scp -i private-key r1 ubuntu@172.31.36.45:/home/ubuntu/
+scp r1 ubuntu@172.31.36.45:/home/ubuntu/h1
+
+--------------------------------------------------------------------------------------------------------------
+Install Packages:
+
+sudo yum install <package-name> --> To install a package on redhat
+
+Example:
+
+sudo yum install java --> To install java
+sudo yum install git
+sudo yum install net-tools --> To install net-tools - which consists netstat command
+--------------------------------------------------------------------------------------------------------------

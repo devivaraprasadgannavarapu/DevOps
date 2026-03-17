@@ -1,0 +1,245 @@
+Maven:
+
+It is not only a  build tool for java application, 
+it is also project management tool which manages the complete build lifecycle. 
+Maven has the capabilities to extend the functionality by adding plugins. 
+----------------------------------------------------------------------
+
+Maven Directory Structure:
+bin: It contains batch files and maven commands are saved here
+conf: It contains configuration files like settings.xml
+lib: it contains jar files
+----------------------------------------------------------------------
+
+What are Artifacts?
+An artifact is a file or output generated during the software build process.
+It is the final product or intermediate file produced by a build tool that can be used for deployment or further processing.
+--------------------------------------------------------------------------
+
+maven commands:
+mvn compile - used to compile source code
+mvn clean -  cleans the previous build files 
+mvn test - run testing steps
+mvn test-compile - compile code fo testing source
+mvn package - creates artifacts
+mvn install -  deploys packages and stores them in local repo
+mvn deploy - artifacts are copied to remote repo
+----------------------------------------------------------------------
+
+what is maven build lifecycle /what are maven phases
+
+Maven lifecycle is a sequence of build phases that define the build process of a project, 
+such as compiling code, running tests, packaging, and deploying the application.
+Instead of manually running many build steps, Maven executes them automatically in order.
+
+Major Phases in Default Lifecycle
+__________________________________________________________
+| Phase    | Purpose                                     |
+| -------- | ------------------------------------------- |
+| validate | Checks project structure and configuration  |
+| compile  | Compiles source code                        |
+| test     | Runs unit tests                             |
+| package  | Creates JAR/WAR file                        |
+| verify   | Runs additional checks                      |
+| install  | Installs artifact in local Maven repository |
+| deploy   | Deploys artifact to remote repository       |
+|________________________________________________________|
+
+1. Validate : Maven validates project is correct and necessary information is available in pom.xml
+2. Compile: compiles java source code, output store in target file
+3. Test : Maven run the unit test cases on compiled. (Junit)
+4. Package: it takes source code which is compiled and generated packages in distribution format (.jar/.war/.ear)
+5. Integration Testing: Package is deployed in a environment where integration testing is done(selenium). 
+6. Verify: verfies whether the package is valid or not. 
+	Runs additional validation checks.
+	Ensures the package meets quality requirements.
+7. Install: Installs package into local repository, Copies the built artifact to the local Maven repository. location (.m2)
+8. Deploy: Uploads the artifact to a remote repository.
+
+mvn clean install  -Dmaven.test.skip=true --> this will skip the test stage in maven
+================================================================================================
+
+🔥 What Is Unit Testing?
+	Unit testing is the process of testing individual components or units of a program independently to verify that each part of the code works correctly.
+	
+🧠 Why Unit Testing Is Important
+
+Unit testing helps to:
+Detect bugs early
+Ensure code works correctly
+Improve code quality
+Make refactoring safer
+Reduce debugging time
+
+Developers can verify logic before the whole application runs.
+-------------------------------------------------------------------------------------------------
+
+🔥 What Is Integration Testing?
+	Integration testing is the process of testing multiple modules or components together to verify that they interact correctly and work as expected when combined.
+
+🧠 Why Integration Testing Is Needed
+Even if each module works perfectly alone, problems can occur when they interact.
+
+Integration testing helps detect issues like:
+Data flow problems between modules
+Incorrect API communication
+Database interaction errors
+Interface mismatches
+----------------------------------------------------------------------------------------------------
+
+🔥 What Is UAT (User Acceptance Testing)?
+	User Acceptance Testing (UAT) is the final phase of testing where end users verify that the system meets business requirements and is ready for production.
+
+🧠 Purpose of UAT
+
+UAT confirms that:
+The software meets business requirements
+The system behaves as expected in real-world scenarios
+All features work correctly for end users
+
+It answers the question:
+“Is the system ready for real users?”
+======================================================================================
+🔥 Difference Between Unit Testing, Integration Testing, and UAT
+	Unit testing verifies individual components of code, 
+	integration testing checks how multiple modules interact with each other, and 
+	UAT is performed by end users to ensure the system meets business requirements before production release.
+________________________________________________________________________________________________________________________________________________
+| Feature      | Unit Testing                          | Integration Testing                       | UAT (User Acceptance Testing)             |
+| ------------ | ------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| Purpose      | Test individual components of code    | Test interaction between multiple modules | Verify system meets business requirements |
+| Stage        | Early stage of development            | After unit testing                        | Final stage before production             |
+| Scope        | Smallest unit (function/class)        | Multiple modules working together         | Entire system                             |
+| Performed By | Developers                            | Developers / QA team                      | End users / clients                       |
+| Focus        | Code correctness                      | Communication between components          | Business functionality                    |
+| Example      | Testing a `calculateTotal()` function | Testing API + database interaction        | Users testing login, payments, reports    |
+|______________________________________________________________________________________________________________________________________________|
+
+================================================================================================
+
+Repo to practice mvn commands: https://github.com/saikiran-private/java-code-sample-with-unit-test-cases.git
+------------------------------------------------------------------------------------------------------------- 
+Maven repositories:
+	Maven repositories are locations where project dependencies, plugins, and build artifacts are stored and managed. Maven uses three types of repositories: local repository, central repository, and remote repository.
+
+🟢 1️⃣ Local Repository
+This is a repository stored on your local system. location :- ~/.m2/repository
+
+Purpose:
+Stores downloaded dependencies
+Stores built project artifacts
+Speeds up builds because dependencies are cached locally
+Example: ~/.m2/repository/junit/junit/4.12/
+
+When you run:
+mvn install
+The artifact is stored in the local repository.
+
+🔵 2️⃣ Central Repository
+The Maven Central Repository is the default public repository.
+Maven automatically downloads dependencies from here if they are not found locally.
+
+Example libraries stored there:
+JUnit
+Spring
+Hibernate
+
+Millions of Java libraries are available here.
+
+🟣 3️⃣ Remote Repository
+A remote repository is hosted by organizations to store internal project artifacts.
+
+Examples include:
+Nexus
+Artifactory
+GitHub Packages
+
+Used for:
+sharing internal libraries
+storing company builds
+managing dependencies
+
+Maven searched for dependencies(packages) in the following sequence:
+local
+central
+remote
+maven stops searching once the dependencies are found.
+
+-------------------------------------------------------------------------------------------------
+Maven installation:
+maven - central repo -->https://repo.maven.apache.org/maven2/
+install java- https://computingforgeeks.com/how-to-install-java-11-openjdk-11-on-rhel-8/
+install maven-- https://tecadmin.net/install-apache-maven-on-centos/
+pom.xml example-- https://www.javatpoint.com/maven-pom-xml
+maven lifecycle --> https://www.geeksforgeeks.org/maven-lifecycle-and-basic-maven-commands/#:~:text=mvn%20clean%3A%20Cleans%20the%20project,Runs%20tests%20for%20the%20project.
+maven commands cheatsheet --> https://www.digitalocean.com/community/tutorials/maven-commands-options-cheat-sheet
+springboot Application: https://www.geeksforgeeks.org/how-to-build-and-deploy-spring-boot-application-in-tomcat-for-devops/
+
+
+
+Build using Makefile for C/C++ :
+https://youtu.be/_r7i5X0rXJk?si=M2BKQVeL7foIE7br
+
+====================================================================
+
+Repo to Practice this
+https://github.com/artisantek/movie-analyzer/tree/aws
+
+For war file Refer this repo
+https://github.com/saikiran-private/java-example.git
+
+
+## Python Package manager:
+
+Install Python3 and Pip 
+sudo yum update
+sudo yum install python3 python3-pip
+
+#package installer for Python- pip
+
+
+create a virtual environment by running this command below
+python3 -m venv myenv
+source myenv/bin/activate
+
+
+Run this command to run python application
+python3 app.py or python3 main.py
+
+
+To run the unit test, 
+
+pytest tests.py
+
+Run this command to showcase the dependencies in the [main.py](http://main.py) or [app.py](http://app.py) when running the application.
+pip3 freeze
+
+## Node Js application:
+
+Installing with NVM (Optional, for Newer Versions)
+
+Install nvm by running:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+
+
+Then, either restart your terminal or source your profile:
+source ~/.bashrc
+
+
+Use nvm to install the latest LTS version of Node.js (which includes npm):
+nvm install --lts
+
+Verify with:
+node --version
+npm --version
+
+npm init -y generates a default package.json, file that keeps track of your project’s metadata and dependencies.
+
+run these commands after cloning the repo.
+npm install express
+npm install --save-dev nodemon jest supertest
+
+run 
+npm start or 
+npm run dev
+

@@ -1,0 +1,495 @@
+Check Git Version
+git --version: Check the version of Git installed on the local machine.
+
+Install Git on RHEL-based Linux OS
+sudo yum install git -y: Install Git using the package manager.
+
+==================
+Git Architecture:
+==================
+Working Directory
+Definition: The working directory is the place where you create, modify, and delete files. It is essentially your project's folder on your local machine.
+
+Details: When you start working on a project, you make changes to files in the working directory. 
+These changes are not tracked by Git until you explicitly tell Git to start tracking them.
+Think of the working directory as your workspace where you do all your development work.
+
+Staging Area (Index)
+Definition: The staging area, also known as the index, is a place where you can group changes that you want to include in your next commit.
+
+Details: After making changes in the working directory, you can selectively choose which changes to include in the next commit by staging them. 
+Staging is like preparing a snapshot of the changes you want to commit. 
+This allows you to review and organise your changes before committing them to the repository.
+
+Local Repository
+Definition: The local repository is a database stored on your local machine that contains all the committed changes and the project's version history.
+
+Details: When you commit changes, they are saved in the local repository. 
+The local repository keeps track of all the versions of your project, allowing you to revert to previous versions if needed. 
+It is like a history book of your project, recording every significant change you make.
+
+Remote Repository
+Definition: A remote repository is a version of your project that is hosted on the internet or a network. It is used for collaboration and backup.
+
+Details: You can push your committed changes from the local repository to a remote repository (e.g., GitHub, GitLab, Bitbucket). 
+This allows multiple developers to work on the same project, sharing their changes with each other. 
+The remote repository acts as a central hub where all team members can access the latest version of the project.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Git Basic commands
+Git bash: https://git-scm.com/downloads --> This is an alternative to putty.
+
+Check Repository Status
+git status: Check if the repository is initialized and track changes in files/folders. This command also shows the status of the working directory and the staging area.
+
+Initialize a Git Repository
+git init: Initialize a new Git repository locally. This creates a .git directory in your project folder, which contains all the necessary metadata for the repository.
+
+git add <filename>: Add changes from the working directory to the staging area. This marks the changes as ready to be committed.
+
+Commit Changes
+git commit -m "<message>": Commit staged changes to the local repository with a descriptive message. The -m flag allows you to include a commit message describing the changes.
+
+
+View Commit History
+git log: Display a log of all commits in the current branch. It shows the commit hash, author, date, and commit message.
+git log --oneline: Display a concise log of commits, showing only the commit hash and message.
+
+User Configuration
+git config user.name --> Check the configured username.
+git config user.email --> Check the configured email.
+git config --global user.name "<user-name>" --> Set the global username. This username will be used for all repositories on the local machine.
+git config --global user.email "<email-id>" --> Set the global email. This email will be used for all repositories on the local machine.
+
+
+Clone a Repository
+git clone <repo>: Clone a remote repository from GitHub to the local machine. This command creates a copy of the remote repository on your local machine.
+
+https://github.com/saikiran-private/tetris
+https://github.com/<organization name>/<repo name>
+
+Branches
+git branch: List all branches in the repository. The current branch is highlighted with an asterisk.
+git branch <branch_name>: Create a new branch. The new branch is based on the current branch.
+git switch <branch_name>: Switch to a specified branch. This command is used to navigate between different branches in the repository.
+git branch -m <new_branch_name>: Rename the current branch to the specified new name.
+git branch -d <branch_name>: Delete a specified branch. The branch must be fully merged into the current branch before deletion.
+git checkout -b <new_branch>: Create and switch to a new branch. It is a shorthand for creating a new branch and checking it out in a single command.
+
+
+Manage Remote Repositories
+git remote -v: List all remote repositories. This shows the short names (aliases) and URLs of the remote repositories.
+git remote add <name> <repo_url>: Add a new remote repository. This allows you to push and pull changes to and from the specified remote repository.
+git push -u <alias-name> <branch>: Push changes to a specific remote repository and branch. The -u flag sets the upstream branch for the current branch.
+
+Rename Remote Alias
+git remote rename <old_name> <new_name>: Rename a remote repository alias.
+
+
+git push --set-upstream origin <branch_name> :When you create a new local branch and want to push it for the first time to a remote repository.
+
+git branch --set-upstream-to=origin/<branch_name> <local_branch_name> change or set the upstream branch for an existing local branch.
+
+What Does “Upstream” Mean?
+The upstream (or tracking) branch is the remote branch that your local branch is associated with. 
+When this relationship is set, you can use simple commands like git pull and git push without needing to specify the remote branch, and Git will know which branch to use.
+--> git push -u origin main --> set upstream
+
+Merge Branches
+git merge <branch_name>: Merge changes from a specified branch into the current branch. 
+This integrates the changes from the specified branch into the current branch.
+
+Personal Access Token (PAT)
+https://<git_token>@github.com/<account_name>/<repo_name>.git: Use PAT for authentication. 
+This is useful for accessing private repositories or when two-factor authentication is enabled.
+
+
+Add in the linux .bashrc
+alias gs="git status"
+alias gl="git log"
+alias glo="git log --oneline"
+alias gc="git checkout"
+alias gb="git branch"
+
+
+HEAD Concept
+HEAD: A pointer to the latest commit in the current branch. 
+It represents the most recent commit on the current branch and serves as a reference point for various Git operations.
+
+
+
+Pull Requests
+Pull Request: Propose changes from one branch to another for review and merging. 
+This is a common workflow in collaborative projects.
+
+Rebase and Merge
+git rebase <branch_name>: Apply changes of the current branch on top of another branch. 
+This can lead to a cleaner commit history compared to git merge.
+git rebase -i HEAD~N: Interactive rebase for the last N commits. 
+Allows you to modify, squash, or reorder commits interactively.
+
+
+**Reference Log**
+`git reflog`: Show a log of all reference changes. 
+This includes branch checkouts, commit amends, and other operations. Useful for recovering lost commits.
+
+**Cherry-Pick Commits**
+`git cherry-pick <commit-ID>`: Apply changes from a specific commit to the current branch. 
+This is useful for applying specific changes without merging an entire branch.
+
+**Stash Changes**
+`git stash`: Temporarily save changes that are not ready to be committed. 
+This allows you to switch branches or perform other operations without losing your changes.
+`git stash pop`: Apply and remove the most recent stash. 
+This restores the changes saved by the most recent git stash command.
+
+**Squash Commits**
+Squashing: Combine multiple commits into a single commit. 
+This is often used to create a cleaner and more comprehensible commit history.
+
+**.gitignore File**
+.gitignore: Specify files and directories for Git to ignore. Commonly used for excluding build artifacts, temporary files, and sensitive information.
+
+**Clone Specific Branch**
+`git clone <git_repo_url> -b <branch_name>`: Clone a repository and check out a specific branch. This is useful when you only need a specific branch from a repository.
+
+**Credentials helper**
+
+`git config --global credential.helper store`: to store your credentials in plain text (note that this is less secure because they're stored unencrypted).  After running this, the next time you push or pull, Git will prompt you for your username and password and then save them in the `~/.git-credentials` file for future use
+
+Additionally, if you're on Windows or macOS, you might choose platform-specific credential helpers for better security. 
+For example, on macOS you can use the macOS Keychain with:
+`git config --global credential.helper osxkeychain`
+
+And on Windows, you can use the Git Credential Manager with:
+
+`git config --global credential.helper manager-core`
+________________________________________________________________
+
+Difference b/w merg and rebase
+________________________________________________________________
+| Feature | Merge                    | Rebase                  |
+| ------- | ------------------------ | ----------------------- |
+| History | Keeps original history   | Rewrites history        |
+| Commit  | Creates merge commit     | No merge commit         |
+| Graph   | Non-linear               | Linear                  |
+| Safety  | Safe for shared branches | Risky if already pushed |
+_______________________________________________________________|
+git merge combines branches with a merge commit, while 
+git rebase rewrites commits to create a linear history.
+-----------------------------------------------------------------
+
+diff command --> git diff
+	 used to view differences between files, commits, branches, or the working directory and staging area.
+
+git diff
+git diff file.txt
+
+git diff --staged --> Check staged changes
+Shows changes that are added to staging area but not committed.
+
+git diff commit1 commit2
+git diff branch1 branch2
+git diff HEAD~1 HEAD --> See what changed in the last commit
+----------------------------------------------------------------------------
+
+revert --> 
+	is used to undo a commit by creating a new commit that reverses the changes without modifying the existing history.
+
+	git revert <commit-id>
+=================================================================================
+reset --> 			
+	moves the HEAD to a previous commit and can modify the staging area and working directory depending on the option used.
+
+	git reset --soft <commit-id> (Moves HEAD only, keeps changes staged.)
+	git reset --soft HEAD~1 (Undo last commit but keep changes:)
+
+	git reset <commit-id> --> --mixed (Moves HEAD and unstages files, but keeps changes in working directory.)
+	git reset HEAD~1 (Undo last commit and unstage files:)
+
+	git reset --hard <commit-id> (Moves HEAD, staging area, and working directory.)
+	git reset --hard HEAD~1 (Delete last commit completely:)
+_____________________________________________________________
+| Command   | Commit history | Staging area | Working files |
+| --------- | -------------- | ------------ | ------------- |
+| `--soft`  | moved          | kept         | kept          |
+| `--mixed` | moved          | cleared      | kept          |
+| `--hard`  | moved          | cleared      | deleted       |
+|___________________________________________________________|
+===========================================================================	
+restore -->
+	git restore is used to discard changes in the working directory or remove files from the staging area and restore them to a previous state.
+
+	git restore file_name --> Restore a modified file (discard changes)
+	git restore --staged file_name --> Unstage a file
+	git restore --source <commit-id> file.txt --> Restore from a specific commit
+	git restore .
+
+Here’s the clear difference between git revert, git reset, and git restore.
+_________________________________________________________________________________________________________________________________________________________
+| Command         | Purpose                                | Affects History        | Affects Working Directory       | Use Case                        |
+| --------------- | -------------------------------------- | ---------------------- | ------------------------------- | ------------------------------- |
+| **git revert**  | Undo a commit by creating a new commit | Yes (adds new commit)  | No direct change to history     | Safe way to undo pushed commits |
+| **git reset**   | Move branch pointer to another commit  | Yes (rewrites history) | Can modify staging/working area | Undo commits locally            |
+| **git restore** | Restore file contents                  | No                     | Yes                             | Discard file changes            |
+_________________________________________________________________________________________________________________________________________________________
+
+Difference between git revert and git restore
+__________________________________________________________________________________________________________________________________
+| Feature              | `git revert`                                   | `git restore`                                          |
+| -------------------- | ---------------------------------------------- | ------------------------------------------------------ |
+| Purpose              | Undo a **commit**                              | Restore **files in working directory or staging area** |
+| History              | Creates a **new commit** that reverses changes | Does **not create a commit**                           |
+| Affects              | Commit history                                 | Working directory or staged files                      |
+| Safe for shared repo | Yes                                            | Mostly used locally                                    |
+| Use case             | Undo a pushed commit                           | Discard local changes                                  |
+__________________________________________________________________________________________________________________________________
+
+git revert undoes a commit by creating a new commit that reverses the changes.
+git restore is used to restore or discard changes in files in the working directory or staging area without affecting commit history.
+----------------------------------------------------------------------------------------
+
+How do you modify an existing commit in Git ?
+If the commit is the latest commit, you use amend.
+--> git commit --amend
+---------------------------------------------------------------------------------------
+Difference between Centralized and Distributed Version Control Systems
+_______________________________________________________________________________________
+| Feature           | Centralized VCS              | Distributed VCS                  |
+| ----------------- | ---------------------------- | -------------------------------- |
+| Repository        | Single central repository    | Every developer has full copy    |
+| Internet required | Yes                          | Not required for most operations |
+| Speed             | Slower                       | Faster                           |
+| Backup            | Risk if central server fails | Multiple copies available        |
+| Example           | SVN                          | Git                              |
+|___________________|______________________________|__________________________________|
+----------------------------------------------------------------------------------------
+
+What is git bisect?
+git bisect is used to find the commit that introduced a bug using binary search.
+Instead of checking every commit, Git halves the search space.
+
+Example:
+git bisect start
+git bisect bad
+git bisect good <commit-id>
+
+Git automatically checks commits between them until the bad commit is found.
+--------------------------------------------------------------------------------------
+
+What is Squashing in Git?
+Squashing means combining multiple commits into a single commit.
+
+Why?
+Clean commit history
+Remove unnecessary commits
+
+--> git rebase -i HEAD~3
+---------------------------------------------------------------------------------------
+
+What is Stashing in Git?
+Stashing temporarily saves uncommitted changes so you can switch branches.
+
+git stash --> stash the working file
+
+git stash apply --> Apply stash
+
+git stash list --> List stashes
+
+git stash drop --> Delete stash
+
+git stash pop --> git stash pop applies the latest stashed changes to the working directory and removes that stash entry from the stash list.
+
+Useful when:
+You are working
+Suddenly need to switch branches.
+
+Is it possible to create a new branch from a stash?
+	Yes, it is possible to create a new branch from a stash.
+--> git stash branch <branch-name>
+-------------------------------------------------------------------------------------------
+
+What are Git Hooks?
+Git hooks are scripts that run automatically when certain Git events occur.
+
+They help automate tasks like:
+Code checks
+Testing
+Commit validation
+Deployment
+
+They are stored in:
+.git/hooks
+=======================================================================================
+
+Types of Git Hooks
+
+Two main categories.
+1. Client-side hooks
+Run on developer machine.
+
+Examples:
+pre-commit
+commit-msg
+pre-push
+post-checkout
+
+Runs before commit is created.
+
+2. Server-side hooks
+Run on Git server.
+
+Examples:
+pre-receive
+update
+post-receive
+
+Runs before accepting pushed changes.
+---------------------------------------------------------------------------------------
+
+Difference between Forking and Cloning
+______________________________________________________________________________
+| Feature         | Fork                        | Clone                      |
+| --------------- | --------------------------- | -------------------------- |
+| Repository copy | Copy to your GitHub account | Copy to your local machine |
+| Platform        | GitHub/GitLab feature       | Git command                |
+| Used for        | Contributing to open source | Local development          |
+| Command         | No command                  | `git clone repo-url`       |
+|____________________________________________________________________________|
+-----------------------------------------------------------------------------------------
+
+How do you recover a deleted branch in Git?
+
+git reflog
+Find the commit ID.
+
+Then recreate branch:
+git checkout -b branch-name <commit-id>
+
+Example:
+
+git checkout -b feature 4f32abc
+Branch is restored.
+-------------------------------------------------------------------------------------------
+
+What is the use of .gitignore?
+	.gitignore is used to specify files and directories that Git should ignore and not track in the repository, such as logs, temporary files, build files, and sensitive data.
+--------------------------------------------------------------------------------------------
+
+What do you add inside a .gitignore file?
+	Inside a .gitignore file we add file names, file extensions, or directory names that Git should ignore, such as log files, build files, dependency folders, and sensitive configuration files.
+-----------------------------------------------------------------------------------------------
+
+What are Git Tags?
+Git tags are used to mark specific points in a repository’s history, usually for releases or important versions.
+
+Why Git Tags are Used
+
+Mark software releases
+Identify important milestones
+Easily return to a specific version of code
+=============================================
+
+1. Lightweight Tag
+Simple pointer to a commit.
+-->git tag v1.0 --> creating tag
+
+No additional information is stored.
+
+2. Annotated Tag
+Stores extra metadata like:
+Tagger name
+Email
+Date
+Message
+--> git tag -a v1.0 -m "Version 1.0 release"
+
+Annotated tags are recommended for releases.
+
+================================================
+Push Tags to Remote
+git push origin v1.0 --> one tag pushing
+git push origin --tags --> Push all tags
+=================================================
+list tags --> git tag --list
+Delete a Local Tag --> git tag -d tag-name
+
+Delete a Remote Tag --> git push origin --delete tag tag-name
+-----------------------------------------------------------------
+
+What is a Bare Repository?
+	A bare repository is a Git repository that does not contain a working directory and is typically used as a central remote repository for collaboration.
+
+What is the difference between a bare repository and a regular repository?
+______________________________________________________
+| Normal Repo            | Bare Repo                 |
+| ---------------------- | ------------------------- |
+| Has working directory  | No working directory      |
+| Used for development   | Used as remote repository |
+| Contains project files | Only Git data             |
+|____________________________________________________|
+--------------------------------------------------------------------
+
+Can you execute Git commands in a bare repository?
+	Yes, Git commands that operate on repository metadata (like git log, git branch, git push) can run in a bare repository, 
+but commands that require a working directory (like git add, git commit, git status) cannot be executed.
+
+git log
+git branch
+git show
+git tag
+git config
+git fetch
+git push
+
+git init --bare repo.git --> to creat bare repository
+----------------------------------------------------------------------------------------
+
+What is git cherry-pick?
+	git cherry-pick is used to apply a specific commit from one branch to another branch
+--> git cherry-pick <commit-id>
+
+Give a real-time use case for git cherry-pick.
+	A common real-time use case of git cherry-pick is when a bug fix exists in a development branch but production cannot merge the entire branch. The specific commit containing the fix is cherry-picked into the production branch.
+----------------------------------------------------------------------------------------
+
+How do you modify an existing commit without creating a new commit?
+--> git <commit-id> --amend
+---------------------------------------------------------------------------------------
+
+You accidentally staged a file containing credentials. How do you remove it before pushing?
+	If a file containing credentials is accidentally staged, it can be removed from the staging area using:
+
+git reset filename
+(or)
+git restore --staged filename
+
+This removes the file from staging without deleting it from the working directory.
+-----------------------------------------------------------------------------------------
+
+How do you identify which developer changed a specific line in a file?
+--> git blame filename
+
+Difference between git log and git blame
+_______________________________________________________________________________________________________________
+| Feature           | `git log`                                  | `git blame`                                |
+| ----------------- | ------------------------------------------ | ------------------------------------------ |
+| Purpose           | Shows **commit history of the repository** | Shows **who modified each line in a file** |
+| Scope             | Works at **commit level**                  | Works at **line level**                    |
+| Information shown | Commit ID, author, date, commit message    | Author, commit ID, date for each line      |
+| Used for          | Viewing project history                    | Identifying who changed specific code      |
+|_____________________________________________________________________________________________________________|
+
+git log shows the commit history of a repository.
+
+git blame shows who last modified each line of a specific file along with the commit details.
+-----------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+

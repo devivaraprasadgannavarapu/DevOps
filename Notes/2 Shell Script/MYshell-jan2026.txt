@@ -1,0 +1,1151 @@
+--------------------------------------------------------------------------------------------------------------
+Shell Scripting
+--------------------------------------------------------------------------------------------------------------
+Shell :- is a command-line interpreter
+that acts as an interface between the user and the operating system (OS) kernel
+
+Shell Script:
+To perform repetitive tasks, Instead od running each individual command manually one after the other - We can write them in a file called as Shell SCript
+
+The extension of shell script is .sh
+
+How to execute Shell Scripts:
+
+1. ./<name>.sh ------- Recommended
+2. bash <name>.sh ------ Simple but only uses BASH Shell
+--------------------------------------------------------------------------------------------------------------
+Shebang:
+
+The first line of any shell script should always start with Shebang 
+
+#!/bin/bash
+
+Shebang invokes the bash shell and if it is not added to the script, The shell script will use the default shell of the server
+--------------------------------------------------------------------------------------------------------------
+Example: hello.sh
+
+#!/bin/bash
+
+echo "Hello World"
+--------------------------------------------------------------------------------------------------------------
+Example: simple.sh
+
+#!/bin/bash
+
+echo "Hello"
+echo "How are you"
+echo "I am Adithya"
+echo "I am from Bengaluru"
+--------------------------------------------------------------------------------------------------------------
+Variables:
+Variables are strings to which we can assign some value. The value can be a integer, string, file name or any other data
+But the name of the variable can only container letters, numbers and underscore
+
+Example: variable.sh
+
+#!/bin/bash
+
+name="Adithya" #Enter Your Name
+place="Bengaluru" #Enter Your Place
+
+echo "Hello"
+echo "How are you"
+echo "I am $name"
+echo "I am $place"
+--------------------------------------------------------------------------------------------------------------
+Arguments:
+
+To reference the arguments passed to shell script at execution time - we can use $1, $2, $3 . . . . . . $(10) . . . $(n)
+
+Example: arguments.sh
+
+#!/bin/bash
+
+name=$1 #First Argument to the Script - Name
+place=$2 #Second Argument to the Script - Place
+
+echo "Hello"
+echo "How are you"
+echo "I am $name"
+echo "I am from $place"
+
+(or)
+===================================================
+#!/bin/bash
+
+echo "Hello"
+echo "How are you"
+echo "I am $1"
+echo "I am from $2"
+
+Execution:
+
+bash arguments.sh Adithya Bengaluru
+bash arguments.sh xyz Hyderabad
+--------------------------------------------------------------------------------------------------------------
+*** Special Variables ***
+
+$0 - The name of the shell Script
+$# - Number of Arguments passed to the script
+$* - The Arguments passed to the script in string format
+$@ - The Arguments passed to the script in array format
+$$ - The PID of the current running process
+$? - The status of last executed command
+--------------------------------------------------------------------------------------------------------------
+Example: specialvariables.sh
+
+#!/bin/bash
+
+echo "Shell Script Name - $0"
+echo "The number of arguments - $#"
+echo "The arguments passed (string) - $*"
+echo "The arguments passed (array) - $@"
+echo "The PID of the Script - $$"
+--------------------------------------------------------------------------------------------------------------
+Operators:
+
+1. Arithmetic Operators [+, _, *, /, %]:
+
+Example: arithmetic.sh
+
+#!/bin/bash
+
+num1=$1 
+num2=$2
+
+sum=`expr $num1 + $num2`
+sub=`expr $num1 - $num2`
+prd=`expr $num1 \* $num2`
+div=`expr $num1 / $num2`
+mod=`expr $num1 % $num2`
+
+echo "The sum of 2 numbers is $sum"
+echo "The difference of 2 numbers is $sub"
+echo "The product of 2 numbers is $prd"
+echo "The division of 2 numbers is $div"
+echo "The modulus of 2 numbers is $mod"
+
+(Or)
+===========================================
+#!/bin/bash
+
+num1=$1 
+num2=$2
+
+sum=$(($num1+$num2))
+sub=$(($num1-$num2))
+prd=$(($num1*$num2))
+div=$(($num1/$num2))
+mod=$(($num1%$num2))
+
+echo "The sum of 2 numbers is $sum"
+echo "The difference of 2 numbers is $sub"
+echo "The product of 2 numbers is $prd"
+echo "The division of 2 numbers is $div"
+echo "The modulus of 2 numbers is $mod"
+--------------------------------------------------------------------------------------------------------------
+2. Relational Operators:
+
+a. Strings
+
+Equal 				-	==
+Not Equal			-	!=
+Greater Than			-	>
+Greater Than or Equal To	-	>=
+Less Than			-	<
+Less Than or Equal To		-	<=
+-----------------------------------------------
+b. Numbers
+
+Equal 				-	eq
+Not Equal			-	ne
+Greater Than			-	gt
+Greater Than or Equal To	-	ge
+Less Than			-	lt
+Less Than or Equal To		-	le
+--------------------------------------------------------------------------------------------------------------
+IF Condition:
+
+Syntax:
+
+a. Simple IF Condition:
+
+if [ condition ];
+then
+    commands
+else
+    commands
+fi
+---------------------------
+b. IF-ELSE-IF
+
+if [ condition ]; then
+    commands
+elif [ condition ]; then
+    commands
+elif [ condition ]; then
+    commands
+else
+    commands
+fi
+---------------------------
+c. Nested IF
+
+if [ condition ]; then
+    if [ condition ];then
+        commands
+    else
+        commands
+    fi
+else
+    commands
+fi
+--------------------------------------------------------------------------------------------------------------
+Example: Find the biggest of 2 numbers: (if condition)
+
+#!/bin/bash
+
+num1=$1
+num2=$2
+
+if [ $num1 -gt $num2 ]; then
+    echo "The Number - $num1 is greater than $num2"
+else
+    echo "The Number - $num2 is greater than $num1"
+fi
+
+(or)
+=====================================================
+#!/bin/bash
+
+if [ $1 -gt $2 ]; then
+    echo "The Number - $1 is greater than $2"
+else
+    echo "The Number - $2 is greater than $1"
+fi
+
+(or)
+==============================================================
+#!/bin/bash				(if-else-if condition)
+
+num1=$1
+num2=$2 
+
+if [ $# -ne 2 ]; then
+    echo "The script requires 2 arguments to be passed!!!!!!"
+elif [ $num1 -eq $num2 ]; then
+    echo "Both Numbers are equal"
+elif [ $num1 -gt $num2 ]; then
+    echo "The Number - $num1 is greater than $num2"
+else
+    echo "The Number - $num2 is greater than $num1"
+fi
+
+(or)
+================================================================
+#!/bin/bash
+
+num1=$1
+num2=$2 
+
+if [ $# -ne 2 ]; then
+    echo "The script requires 2 arguments to be passed!!!!!!"
+elif [ $num1 -gt $num2 ]; then
+    echo "The Number - $num1 is greater than $num2"
+elif [ $num1 -eq $num2 ]; then
+    echo "Both Numbers are equal"
+else
+    echo "The Number - $num2 is greater than $num1"
+fi
+--------------------------------------------------------------------------------------------------------------
+3. File Operators
+
+[ -f <name> ] - To check whether given name is a file 
+[ -d <name> ] - To check whether given name is a directory
+
+[ -r <name> ] - To check whether given name file/dir has read permission 
+[ -w <name> ] - To check whether given name file/dir has write permission 
+[ -x <name> ] - To check whether given name file/dir has execute permission 
+
+[ -e <name> ] - To check whether given name file/dir/link exists
+[ -s <name> ] - To check whether given file has some data
+--------------------------------------------------------------------------------------------------------------
+Example: Use file operators to check the given by the user is a file or directory
+
+#!/bin/bash
+
+echo "Enter the name of file or directory"
+read name
+
+if [ -f $name ]; then
+    echo "The Given Name - $name - Is a File"
+elif [ -d $name ]; then
+    echo "The Given Name - $name - Is a Directory"
+else
+    echo "File or Directory doesnot exist with the Name - $name"
+fi
+======================================================================
+(or)
+
+#!/bin/bash
+
+echo "Enter the name of file or directory"
+read name
+
+if [ -f $name ]; then
+    echo "The Given Name - $name - Is a File"
+
+    if [ -s $name ]; then
+        echo "The file is not empty"
+    else
+        echo "The file is empty"
+    fi
+
+    if [ -r $name ]; then
+        echo "The file has READ Permission"
+    else
+        echo "The file does not have READ Permission"
+    fi
+
+    if [ -w $name ]; then
+        echo "The file has WRITE Permission"
+    else
+        echo "The file does not have WRITE Permission"
+    fi
+
+    if [ -x $name ]; then
+        echo "The file has EXECUTE Permission"
+    else
+        echo "The file does not have EXECUTE Permission"
+    fi
+elif [ -d $name ]; then
+    echo "The Given Name - $name - Is a Directory"
+else
+    echo "File or Directory doesnot exist with the Name - $name"
+fi
+--------------------------------------------------------------------------------------------------------------
+Assignment:
+1. Write a script to find the biggest of 3 numbers
+
+#!/bin/bash
+
+num1=$1
+num2=$2
+num3=$3
+
+if [ $# -ne 3 ]; then
+        echo "enter 3 arguments to see biggest number"
+
+
+elif [ $num1 -eq $num2 ] && [ $num2 -eq $num3 ]; then
+        echo "given all arguments are equal -- enter different arguments"
+
+
+elif [ $num1 -eq $num2 ]; then
+        echo "First and Second arguments are equal -- enter different arguments"
+elif [ $num1 -eq $num3 ]; then
+        echo "First and Third arguments are equal -- enter different arguments"
+elif [ $num2 -eq $num3 ]; then
+        echo "Second and third arguments are equal -- enter different arguments"
+
+        elif [ $num1 -gt $num2 ] && [ $num1 -gt $num3 ]; then
+                echo "the $num1 is biggest"
+        elif [ $num2 -gt $num1 ] && [ $num2 -gt $num3 ]; then
+                echo "the $num2 is biggest"
+
+
+        else
+                echo "the $num3 is biggest"
+fi
+--------------------------------------------------------------------------------------------------------------
+Practical Examples: Find all the files created more than 30 days - Archive them and delete the older files
+
+#!/bin/bash
+
+log_folder="/home/ec2-user/logs"
+backup_folder="$log_folder/backups"
+archive_name="log_backup_$(date +%d%m%y_%H%M%S).tar.gz"
+
+# Create the Backup Folder if it doesnt exist
+mkdir -p $backup_folder
+
+cd $log_folder
+
+find -type f -mtime +30 -exec tar -cvzf $backup_folder/$archive_name {} +
+
+if [ -f $backup_folder/$archive_name ]; then
+    echo "Archive has been created successfully at $backup_folder/$archive_name"
+    echo "Now deleting older files"
+    find -type f -mtime +30 -delete
+else
+    echo "No Files found for archive"
+fi
+--------------------------------------------------------------------------------------------------------------
+touch -d "40 days ago" <file-name> --> To create a file with date modified 40 days ago
+--------------------------------------------------------------------------------------------------------------
+Difference between .bashrc and .bash_profile
+__________________________________________________________________________________________________________
+| Feature      | `.bashrc`                                        | `.bash_profile`                      |
+| ------------ | ------------------------------------------------ | ------------------------------------ |
+| Purpose      | Configure **interactive non-login shells**       | Configure **login shells**           |
+| When it runs | Every time a new terminal or shell session opens | When a user **logs into the system** |
+| Usage        | Aliases, functions, shell settings               | Environment variables, PATH settings |
+| Frequency    | Runs **many times**                              | Runs **once at login**               |
+|________________________________________________________________________________________________________|
+These are auto executable files that execute everytime an user logs into the server or a shell session starts
+They are generally used to define Environment Vaibales, Aliases etc
+
+Example:
+
+alias FE="find -type f -empty"
+alias k="kubectl"
+alias KG="kubectl get pods"
+
+export NAME="Adithya"
+
+bash_logout - This is also an auto executable file that executes everytime a session is exited
+bash_history - This file contains all the commands executed by the user in previous session
+--------------------------------------------------------------------------------------------------------------
+Difference between for and while (in Bash/Shell)
+______________________________________________________________________________________________________
+| Feature       | `for` Loop                             | `while` Loop                              |
+| ------------- | -------------------------------------- | ----------------------------------------- |
+| Purpose       | Iterate over a **list of items**       | Execute while a **condition is true**     |
+| Use case      | When number of iterations is **known** | When iterations depend on a **condition** |
+| Structure     | Iterates through values                | Runs until condition becomes false        |
+| Example usage | Files, arrays, sequences               | Counters, reading input                   |
+|____________________________________________________________________________________________________|
+
+While Loop:
+
+Syntax:
+
+while [ condition ];
+do
+    Commands;
+done
+=============================
+(or)
+
+while [ condition ]; do
+    Commands;
+done
+--------------------------------------------------------------------------------------------------------------
+Example: Find the sum of n Numbers
+-----------------------------------
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+sum=0
+
+while [ $n -gt 0 ];
+do
+    sum=$(($sum+$n))
+    n=$(($n-1))
+done
+
+echo "The sum of N Numbers is $sum"
+--------------------------------------------------------------------------------------------------------------
+Example: Find the factorial of a Number
+----------------------------------------
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+fact=1
+
+while [ $n -gt 1 ];
+do
+    fact=$(($fact*$n))
+    n=$(($n-1))
+done
+
+echo "The Factorial of the Number is $fact"
+--------------------------------------------------------------------------------------------------------------
+Script: Find the sum of even numbers upto N
+--------------------------------------------
+Example -- n=5
+sum=2+4=6
+
+Example -- n=10
+sum=2+4+6+8+10=30
+
+#!/bin/bash
+
+echo "Enter the N value"
+read n
+
+sum=0
+
+while [ $n -gt 1 ];
+do
+    rem=$(($n%2))
+    if [ $rem -eq 0 ]; then
+        sum=$(($sum+$n))
+    fi
+    n=$(($n-1))
+done
+
+echo "The sum of EVEN numbers - $sum"
+
+(or)
+================================================
+#!/bin/bash
+
+echo "Enter the N value"
+read n
+
+sum=0
+
+while [ $n -gt 1 ];
+do
+    if [ $(($n%2)) -eq 0 ]; then
+        sum=$(($sum+$n))
+    fi
+    n=$(($n-1))
+done
+
+echo "The sum of EVEN numbers - $sum"
+
+(or)
+==============================================
+#!/bin/bash
+
+echo "Enter the N value"
+read n
+
+sum=0
+i=2
+
+while [ $i -le $n ];
+do
+    sum=$(($sum+$i))
+    i=$(($i+2))
+done
+
+echo "The sum of EVEN numbers - $sum"
+--------------------------------------------------------------------------------------------------------------
+Debugging in Shell Scripts:
+
+set -x --> Print commands and their arguments as they are executed
+set -e --> Exits the shell script immediately - If a command exits with non zero status
+--------------------------------------------------------------------------------------------------------------
+Difference between while and while read in Bash
+_____________________________________________________________________________________________________________
+| Feature     | `while`                                  | `while read`                                     |
+| ----------- | ---------------------------------------- | ------------------------------------------------ |
+| Purpose     | Run a loop while a **condition is true** | Read **input line-by-line** and process it       |
+| Usage       | Used with conditions or counters         | Used to read **files, input, or command output** |
+| Data source | Based on logical condition               | Based on **input stream**                        |
+| Common use  | Counting loops                           | Processing files or logs                         |
+|___________________________________________________________________________________________________________|
+Syntax:
+
+While Read Loop
+
+while read <variable>
+do
+    commands
+done < <file-path>
+--------------------------------------------------------------------------------------------------------------
+Script - Create cat command using while read loop
+
+Example:
+We are learning Devops
+This is part of Jan2026 Batch
+Currently we are learning Shell Scripting
+
+Output:
+We are learning Devops
+This is part of Jan2026 Batch
+Currently we are learning Shell Scripting
+
+#!/bin/bash
+
+while read line
+do
+    echo $line
+done < $1
+--------------------------------------------------------------------------------------------------------------
+Script: Find the number of words in each line of the file
+
+Example:
+We are learning Devops
+This is part of Jan2026 Batch
+Currently we are learning Shell Scripting
+
+Output:
+4
+6
+6
+
+#!/bin/bash
+
+while read line
+do
+    echo $line | wc -w 
+done < $1
+--------------------------------------------------------------------------------------------------------------
+script: Delete all the users listed in a file
+
+#!/bin/bash
+
+while read user
+    sudo userdel -r $user
+done < users-list
+--------------------------------------------------------------------------------------------------------------
+Assignment:
+1. Search in Linux - File that has information about the distribution we are using
+--> cat /etc/os-release
+--------------------------------------------------------------------------------------------------------------
+
+Practical-Script: Install Jenkins on Ubuntu or RHEL
+
+#!/bin/bash
+
+distro=$(cat /etc/os-release | grep "^ID=" | cut -d "=" -f2 | sed 's/"//g')
+
+echo "Installing Jenkins on $distro"
+
+if [ $distro == "rhel" ]; then
+    
+    sudo yum install wget -y
+
+    sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/rpm-stable/jenkins.repo
+    
+    sudo yum upgrade -y
+    sudo yum install fontconfig java-21-openjdk -y
+    
+    sudo yum install jenkins -y
+    
+    sudo systemctl daemon-reload
+    sudo systemctl start Jenkins
+
+elif [ $distro == "ubuntu" ]; then
+    
+    sudo apt install wget -y
+
+    sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+    https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+    
+    echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+    
+    sudo apt update
+    sudo apt install fontconfig openjdk-21-jre -y
+    
+    sudo apt install jenkins -y
+    
+    sudo systemctl daemon-reload
+    sudo systemctl start jenkins
+else
+    echo "Unsupported Distribution - Only RHEL and Ubuntu are supported by this Script!!!!"
+fi
+
+echo "Access Jenkins at $(curl -s ifconfig.me):8080"
+-----------------------------------------------------------------------------------------------
+For Loop Syntax:
+
+1. C-Style:
+
+for ((Initlizations;Condition;Iteration))
+do
+    commands
+done
+--------------------------------------------
+2. List Iteration Loop:
+
+a. With Direct Values
+
+for i in var1 var2 var3 var4 . ...... varn
+do
+    commands
+done
+**----------------------------------------**
+b. Using Range Function
+
+for i in {0..10} -- The value of i will iterate from 0 to 10 with increments of 1
+for i in {0..10..5} -- The value of i will iterate from 0 to 10 with increments of 5
+**----------------------------------------**
+c. Using Sequence Command
+
+for i in $(seq 0 10) -- The value of i will iterate from 0 to 10 with increments of 1
+for i in $(seq 0 5 10) -- The value of i will iterate from 0 to 10 with increments of 5
+**----------------------------------------**
+d. Using Arguments
+
+for i in $* -- The variable i will interate through all the arguments passed to the script
+for i in $@ -- The variable i will interate through all the arguments passed to the script
+
+Script: To Print n Numbers
+
+Example: n=4
+
+Output:
+0
+1 
+2
+3
+4
+-----------------------------------
+1. While Loop
+
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+i=0
+
+while [ $i -le $n ];
+do
+    echo $i
+    ((i++))
+done
+-----------------------------------
+2. For Loop
+
+a. C-Style Syntax
+
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+for ((i=0;i<=n;i++))
+do
+    echo $i
+done
+**----------------------------------------**
+b. List Iteration - Sequence Command
+
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+for i in $(seq 0 2 $n)
+do
+    echo $i
+done
+
+**----------------------------------------**
+Script: Find the sum of even numbers upto N
+
+Example -- n=5
+sum=2+4=6
+
+Example -- n=10
+sum=2+4+6+8+10=30
+
+1. While Loop
+
+#!/bin/bash
+
+echo "Enter the N value"
+read n
+
+sum=0
+i=2
+
+while [ $i -le $n ];
+do
+    sum=$(($sum+$i))
+    i=$(($i+2))
+done
+
+echo "The sum of EVEN numbers - $sum"
+---------------------------------------------
+2. For Loop
+
+a. C-Style:
+
+#!/bin/bash
+
+echo "Enter the N value"
+read n
+
+for ((sum=0,i=2;i<=n;i+=2))
+do
+    sum=$(($sum+$i))
+done
+
+echo "The sum of EVEN numbers - $sum"
+============================================
+b. Sequence Command
+
+#!/bin/bash
+
+echo "Enter the N value"
+read n
+
+sum=0
+
+for i in $(seq 2 2 $n)
+do
+    sum=$(($sum+$i))
+done
+
+echo "The sum of EVEN numbers - $sum"
+--------------------------------------------------------------------------------------------------------------
+Script: Find the factorial of a number
+
+1. While loop
+
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+fact=1
+
+while [ $n -gt 1 ];
+do
+    fact=$(($fact*$n))
+    n=$(($n-1))
+done
+
+echo "The Factorial of the Number is $fact"
+-------------------------------------------
+2. For Loop
+
+a. C Syntax:
+
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+for ((fact=1,i=n;i>1;i--))
+do
+    fact=$(($fact*$i))
+done
+
+echo "The Factorial of $n is $fact"
+
+b. Seq Command:
+
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+fact=1
+for i in $(seq 1 $n)
+do
+    fact=$(($fact*$i))
+done
+
+echo "The Factorial of $n is $fact"
+-------------------------------------------------------------------------------------------------------------
+Script: Find the sum of all the numbers passed to the script as arguments
+
+bash sum-of-arg.sh 3 7 2 8
+
+Output:
+
+The sum of all the arguments - 20
+
+#!/bin/bash
+
+sum=0
+
+for i in $*
+do
+    sum=$(($sum+$i))
+done
+
+echo "The SUM of all Argumets - $sum"
+--------------------------------------------------------------------------------------------------------------
+Script: Find the factorial of all the arguments passed to the script
+
+bash fact-arg.sh 1 3 5 6
+
+Output:
+
+The factorial of 1 is 1
+The factorial of 3 is 6
+The factorial of 5 is 120
+The factorial of 6 is 720
+
+#!/bin/bash
+
+for n in $*
+do
+    for ((fact=1,i=n;i>1;i--))
+    do
+        fact=$(($fact*$i))
+    done
+
+    echo "The Factorial of $n is $fact"
+done
+--------------------------------------------------------------------------------------------------------------
+Case Statements:
+
+Syntax:
+
+case $<var> in
+    pattern1) Commands to be executed if variable matches pattern1 ;;
+    pattern2) Commands to be executed if variable matches pattern2 ;;
+    pattern3) Commands to be executed if variable matches pattern3 ;;
+    pattern4 | pattern5) Commands to be executed if variable matches either pattern4 or pattern5 ;;
+    *) Commands to be executed if none of the patterns match the variable ;;
+esac
+--------------------------------------------------------------------------------------------------------------
+Script: Check the number enterted by the user whether it is 1,2,3,4 or5
+
+1. if-else-if
+
+#!/bin/bash
+
+echo "Enter the number from 1-5"
+read n
+
+if [ $n -eq 1 ]; then
+    echo "The Number entered by the user is ONE"
+elif [ $n -eq 2 ]; then
+    echo "The Number entered by the user is TWO"
+elif [ $n -eq 3 ]; then
+    echo "The Number entered by the user is THREE"
+elif [ $n -eq 4 ] || [ $n -eq 5 ]; then
+    echo "The Number entered by the user is either FOUR or FIVE"
+else
+    echo "Invalid Input"
+fi
+=================================================================
+(or)
+
+2. case
+
+#!/bin/bash
+
+echo "Enter the number from 1-5"
+read n
+
+case $n in
+    1) echo "The Number entered by the user is ONE";;
+    2) echo "The Number entered by the user is TWO";;
+    3) echo "The Number entered by the user is THREE";;
+    4|5) echo "The Number entered by the user is either FOUR or FIVE";;
+    *) echo "Invalid Input";;
+esac
+--------------------------------------------------------------------------------------------------------------
+Script: Create a Menu Based Opertaion using case statements to perform various Linux Tasks
+
+1 -- Create an User
+2 -- Add an User to Group
+3 -- Delete User
+4 -- Remove User from Group
+5 -- Search for a File in a particular location
+
+#!/bin/bash
+
+echo -e "Linux Operations Available for Selection\n"
+echo "1 -- Create an User"
+echo "2 -- Add an User to Group"
+echo "3 -- Delete User"
+echo "4 -- Remove User from Group"
+echo "5 -- Search for a File in a particular location"
+
+echo -e "\nSelect an option from the above list 1-5"
+read menu
+
+case $menu in
+    1) echo -e "\nLinux Operation - Create User Selected"
+    echo "Enter the USERNAME"
+    read user
+    sudo useradd $user
+    echo -e "\nThe USER - $user has been created successfully"
+    ;;
+    2) echo -e "\nLinux Operation - Add User to Group Selected"
+    echo "Enter the USERNAME"
+    read user
+    echo "Enter the GROUP Name"
+    read group
+    sudo gpasswd -a $user $group
+    ;;
+    3) echo -e "\nLinux Operation - Delete User Selected"
+    echo "Enter the USERNAME"
+    read user
+    sudo userdel $user
+    echo -e "\nThe USER - $user has been deleted successfully"
+    ;;
+    4) echo -e "\nLinux Operation - Remove User from Group Selected"
+    echo "Enter the USERNAME"
+    read user
+    echo "Enter the GROUP Name"
+    read group
+    sudo gpasswd -d $user $group
+    ;;
+    5) echo -e "\nLinux Operation - Find File Selected"
+    echo "Enter the file/directory to search"
+    read search
+    echo "Enter the path to Search the File/Directory"
+    read path
+    find $path -name $search
+    ;;
+    *) echo -e "\nInvalid Linux Operation Selected, Rerun The Script!!!!!"
+esac
+--------------------------------------------------------------------------------------------------------------
+Assignment: Read about Mail Command
+--------------------------------------------------------------------------------------------------------------
+
+Mail Command:
+
+echo -e "Hello\nHow are you" | mail -s "Hello" -c <cc> -b <bcc> -a <attachments> <email-id>
+
+mail -s <subject> <email-id> < <file-path>
+
+Example: 
+
+mail -s "Services Stopped" adithya@gmail.com < stopped.txt
+--------------------------------------------------------------------------------------------------------------
+Script: Check whether a particular set of services are running on the server
+
+#!/bin/bash
+
+for i in jenkins docker kubelet
+do
+    systemctl is-active -q $i
+    if [ $? -ne 0 ]; then
+        echo "The $i has stopped - Please Investigate"
+    fi
+done
+
+(or)
+
+#!/bin/bash
+
+EMAIL="adithya@gmail.com"
+HOSTNAME=$(hostname)
+TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+
+echo "Services Stopped on $HOSTNAME at $TIMESTAMP" > service.txt
+echo "The following service were stopped" >> service.txt
+
+STOPPED=0
+
+for i in jenkins docker kubelet
+do
+    systemctl is-active -q $i
+    if [ $? -ne 0 ]; then
+        echo "$i has stopped" >> service.txt
+        STOPPED=1
+    fi
+done
+
+if [ $STOPPED -eq 1 ]; then
+    mail -s "Services Stopped on $HOSTNAME" $EMAIL < service.txt
+fi
+
+rm service.txt
+--------------------------------------------------------------------------------------------------------------
+Script: Monitor the DISK Usage of the server - If Usage exceeds 80% Send an EMAIL
+
+#!/bin/bash
+
+EMAIL="adithya@gmail.com"
+HOSTNAME=$(hostname)
+TIMESTAMP=$(date '+%d%m%Y-%H%M%S')
+DISK_USAGE=$(df -h | grep "/$" | awk '{print$(NF-1)}' | sed 's/%//g')
+
+if [ $DISK_USAGE -gt 80 ]; then
+    echo "DISK Usage has crossed 80% - $HOSTNAME - $TIMESTAMP" > disk.txt
+    echo "Current DISK Usage - $DISK_USAGE" >> disk.txt
+    mail -s "DISK FULL on $HOSTNAME" $EMAIL < disk.txt 
+fi
+--------------------------------------------------------------------------------------------------------------
+
+Crontab:
+
+It is a linux service used for scheduling commands to be executed periodically
+
+crontab -e --> To edit the crontab file
+crontab -l --> To list the existing crontabs
+
+Configuration:
+
+*           *           *           *           *           <command>
+[mins]      [hour]      [date]      [month]     [day]
+
+Days:
+
+Sunday           --    00
+Monday           --    01
+Tuesday          --    02
+Wednesday        --    03
+Thursday         --    04
+Friday           --    05
+Saturday         --    06
+
+At 11 AM on 5th Oct on Sunday   -- 00 11 05 10 00 <command>
+Every Friday at 6PM             -- 00 18 * * 05 <command>
+Every Monday to Friday at 10 AM -- 00 10 * * 01-05 <command>
+Every Hour at 30th Minute       -- 30 * * * * <command>
+Every 15 Minutes                -- */15 * * * * <command>
+Every Minute                    -- * * * * * <command>
+
+For Practise - crontab.guru
+--------------------------------------------------------------------------------------------------------------
+Select Loop:
+
+Syntax:
+
+select $<var> in option1 option2 option3 . . . . . optionn
+do
+    commands
+done
+--------------------------------------------------------------------------------------------------------------
+Script: Ask the user to select a Operation
+
+#!/bin/bash
+
+select menu "Create an User" "Add an User to Group" "Delete User" "Remove User from Group" 
+do
+    echo "Linux Opertaion Selected - $menu"
+    break
+done
+--------------------------------------------------------------------------------------------------------------
+Function:
+
+Syntax:
+
+<function-name> () {
+    commands
+}
+
+To execute the function - <function-name>
+--------------------------------------------------------------------------------------------------------------
+Script: Hello World Example using Functions
+
+#!/bin/bash
+
+hello () {
+    echo "Hello World"
+    echo "Executing Commands using Function"
+}
+
+hello
+
+(or)
+
+#!/bin/bash
+
+hello () {
+    echo "Hello World"
+    echo "Executing Commands using Function"
+    echo "I am $1, I am From $2"
+}
+
+hello Adithya Bengaluru
+--------------------------------------------------------------------------------------------------------------
+Read About:
+1. Redirection with Standard Output and Standard Error [Combined - Send to /dev/null]
+2. Running Commands in Background [&] - Bringing them to Foreground [fg]
+--------------------------------------------------------------------------------------------------------------
+

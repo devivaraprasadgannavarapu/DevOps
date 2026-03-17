@@ -1,0 +1,552 @@
+--------------------------------------------------------------------------------------------------------------
+Shell Script
+--------------------------------------------------------------------------------------------------------------
+18-09-25 - class 1
+--------------------------------------------------------------------------------------------------------------
+bashrc and bash_profile
+
+These are auto executable files that execute everytime an user logs in to the server or a shell session starts
+
+They are generally used to define environment variables, alias etc
+
+Example:
+
+alias FED="find -type f -empty -delete"
+export NAME="Adithya"
+
+bash_logout - This is also an auto executable file that executes everytime the a session is exited
+bash_history - This file contains all the commands that were executed by the user on the server
+--------------------------------------------------------------------------------------------------------------
+Shell Script:
+
+To perform repititive tasks, Instead of running each individual commands manually one after the other. We can write them in a file called as shell Script
+
+The extension of Shell Scripts Files is .sh
+
+How to execute shell Scripts
+
+1. ./<name>.sh
+2. sh <name>.sh
+3. bash <name>.sh
+
+Shebang:
+
+The first line of any shell script should always start with Shebang
+
+#!/bin/bash
+
+Shebang invokes the bash shell and if it is not added to the script, The Shell script will use the defualt shell of the server
+--------------------------------------------------------------------------------------------------------------
+Example: hello.sh
+
+#!/bin/bash
+
+echo "Hello"
+echo "How are you"
+--------------------------------------------------------------------------------------------------------------
+Arguments to Shell Scripts:
+
+To pass argumnets to the shell script at execution time, We can use $1, $2, $3, $4. . . . ${10}....${n}
+
+Example argument.sh
+
+#!/bin/bash
+
+echo "I am $1"
+echo "I am from $2"
+echo "I am part of $3 $4 Devops Batch"
+--------------------------------------------------------------------------------------------------------------
+Variables:
+
+Variables are character strings to which we can assign some value. The value can be anything like numbers, strings, filenames etc
+
+The name of the variable can only contain letters, numbers and underscore 
+
+To access the value stored in a variable inside the shell script, Use $ followed by the variable name
+
+Example: variable.sh
+
+#!/bin/bash
+
+name="Adithya"
+place="Bengaluru"
+
+echo "I am $name"
+echo "I am from $place"
+
+echo "I have registered to the course with the name $name"
+echo "The batch is September 2025 $place Devops Batch"
+--------------------------------------------------------------
+(or)
+
+#!/bin/bash
+
+name=$1
+place=$2
+
+echo "I am $name"
+echo "I am from $place"
+
+echo "I have registered to the course with the name $name"
+echo "The batch is September 2025 $place Devops Batch"
+--------------------------------------------------------------------------------------------------------------
+Special Variables:
+
+$0 - Gives the name of the script we are executing
+$# - Gives the total number of arguments passed to the script
+$* - Gives all the arguments passed to the script
+$@ - Gives all the arguments passed to the script in Array format
+$$ - Gives the PID of the current running process
+$? - Gives the status of the last executed command [0-success, Any Other Number - Failure]
+$! - Gives the PID of the last that went into background
+--------------------------------------------------------------------------------------------------------------
+Background Process:
+
+<command> & --> To send a command execution to background
+
+Example: bash script.sh &
+
+jobs --> TO check all the jobs that have been sent to background
+
+fg <job-number> --> TO bring the background job to foreground
+--------------------------------------------------------------------------------------------------------------
+Operators:
+
+1. Arithmetic Operators [+, -, *, /, %]
+
+Example: arithmetic.sh
+
+#!/bin/bash
+
+num1=$1
+num2=$2
+
+sum=`expr $num1 + $num2`
+sub=`expr $num1 - $num2`
+mul=`expr $num1 \* $num2`
+div=`expr $num1 / $num2`
+mod=`expr $num1 % $num2`
+
+echo "The sum of 2 numbers is $sum"
+echo "The difference of 2 numbers is $sub"
+echo "The product of 2 numbers is $mul"
+echo "The division of 2 numbers is $div"
+echo "The modulus of 2 numbers is $mod"
+--------------------------------------------------------------------
+(or)
+
+#!/bin/bash
+
+num1=$1
+num2=$2
+
+sum=$(($num1 + $num2))
+sub=$(($num1 - $num2))
+mul=$(($num1 * $num2))
+div=$(($num1 / $num2))
+mod=$(($num1 % $num2))
+
+echo "The sum of 2 numbers is $sum"
+echo "The difference of 2 numbers is $sub"
+echo "The product of 2 numbers is $mul"
+echo "The division of 2 numbers is $div"
+echo "The modulus of 2 numbers is $mod"
+--------------------------------------------------------------------------------------------------------------
+2. Relational Operators
+
+a. Strings
+
+Equal                   -       ==
+Not Equal               -       !=
+Less Than               -       <
+Less Than or Equal To   -       <=
+Greater Than            -       >
+Greater Than or Equal To-       >=
+
+b. Numbers
+
+Equal                   -       eq
+Not Equal               -       ne
+Less Than               -       lt
+Less Than or Equal To   -       le
+Greater Than            -       gt
+Greater Than or Equal To-       ge
+--------------------------------------------------------------------------------------------------------------
+If Conditions
+
+Syntax:
+
+a. Simple IF Statement
+
+if [condition]
+then
+    commands
+else
+    commands
+fi
+--------------------------
+b. if-else-if
+
+if [condition]; then 
+    commands
+elif [condition]; then
+    commands
+elif [condition]; then
+    commands
+else
+    commands
+fi
+--------------------------
+c. Nested If
+
+if [condition]; then
+    if [condition]; then
+        commands
+    else
+        commands
+    fi
+else
+    commands
+fi
+--------------------------------------------------------------------------------------------------------------
+Example: Find the biggest of 2 numbers
+
+#!/bin/bash
+
+num1=$1
+num2=$2
+
+if [ $num1 > $num2 ]; then
+    echo "The Number - $num1 is greater than $num2"
+else
+    echo "The Number - $num2 is greater than $num1"
+fi
+---------------------------------------------------------
+(or)
+
+#!/bin/bash
+
+if [ $1 -gt $2 ]; then
+    echo "The Number - $1 is greater than $2"
+else
+    echo "The Number - $2 is greater than $1"
+fi
+--------------------------------------------------------
+(or)
+
+#!/bin/bash
+
+num1=$1
+num2=$2
+
+if [ $# -ne 2 ]; then
+    echo "The script requires 2 arguments"
+    echo "Usage <script> number1 number2"
+elif [ $num1 -eq $num2 ]; then
+    echo "Both Numbers are equal"
+elif [ $num1 -gt $num2 ]; then
+    echo "The Number - $num1 is greater than $num2"
+else
+    echo "The Number - $num2 is greater than $num1"
+fi
+--------------------------------------------------------
+(or)
+
+#!/bin/bash
+
+num1=$1
+num2=$2
+
+if [ $# -eq 2 ]; then
+    if [ $num1 -eq $num2 ]; then
+        echo "Both Numbers are equal"
+    elif [ $num1 -gt $num2 ]; then
+        echo "The Number - $num1 is greater than $num2"
+    else
+        echo "The Number - $num2 is greater than $num1"
+    fi
+else
+    echo "The script requires 2 arguments"
+    echo "Usage: <script> number1 number2"
+fi
+--------------------------------------------------------------------------------------------------------------
+Assignment - Write a Shell Script to find the biggest of 3 numbers
+--------------------------------------------------------------------------------------------------------------
+3. File Operators
+
+[ -f <input> ] -- TO check whether given input is a file
+[ -d <input> ] -- TO check whether given input is a directory
+
+[ -r <input> ] -- TO check whether given input file/directory has read permission for owner
+[ -w <input> ] -- TO check whether given input file/directory has write permission for owner
+[ -x <input> ] -- TO check whether given input file/directory has executable permission for owner
+
+[ -e <input> ] -- TO check whether given input file/directory/link exists
+
+[ -s <input> ] -- TO check whether given input file has some data
+--------------------------------------------------------------------------------------------------------------
+Example: Use file operators to check whether a file or directory exists
+
+#!/bin/bash
+
+echo "Enter the name of the file or directory"
+read name
+
+if [ -f $name ]; then
+    echo "The Given Input - $name is a file"
+elif [ -d $name ]; then
+    echo "The Given Input - $name is a directory"
+else
+    echo "File or Directory doesnot exist"
+fi
+=========================================================================
+(or)
+
+#!/bin/bash
+
+echo "Enter the name of the file or directory"
+read name
+
+if [ -f $name ]; then
+    echo "The Given Input - $name is a file"
+    
+    if [ -s $name ]; then
+        echo "The file is not empty"
+    else
+        echo "The file is empty"
+    fi
+    
+    if [ -r $name ]; then
+        echo "The file has read permission"
+    else
+        echo "The file doesnot have read permission"
+    fi
+    
+    if [ -w $name ]; then
+        echo "The file has write permission"
+    else
+        echo "The file doesnot have write permission"
+    fi
+    
+    if [ -x $name ]; then
+        echo "The file has execute permission"
+    else
+        echo "The file doesnot have execute permission"
+    fi
+elif [ -d $name ]; then
+    echo "The Given Input - $name is a directory"
+else
+    echo "File or Directory doesnot exist"
+fi
+--------------------------------------------------------------------------------------------------------------
+Example: Check whether a number is even or odd
+
+#!/bin/bash
+
+echo "Enter the number"
+read num
+
+mod=$(($num % 2))
+
+if [ $mod -eq 0 ]; then
+    echo "The number - $num is an Even Number"
+else
+    echo "The number - $n is an Odd Number"
+fi
+===================================================
+(or)
+
+#!/bin/bash
+
+echo "Enter the number"
+read num
+
+if [ $(($num%2)) -eq 0 ]; then
+    echo "The number - $num is an Even Number"
+else
+    echo "The number - $num is an Odd Number"
+fi
+--------------------------------------------------------------------------------------------------------------
+Assignment: Command to find all the file created more than 30 days ago and create a tar ball arhive
+--------------------------------------------------------------------------------------------------------------
+Practical Example: Find all the files created more than 30 days ago - Zip them and delete
+
+#!/bin/bash
+
+mkdir -p /home/ec2-user/log_backup
+
+tar_name="logs_backup_$(date +%d%m%Y).tar.gz"
+
+find logs/ -type f -mtime +30 -exec tar -czf /home/ec2-user/log_backup/$tar_name {} +
+
+if [ -f /home/ec2-user/log_backup/$tar_name ]; then
+    echo "The archive successfully created at /home/ec2-user/log_backup/$tar_name"
+    find /home/ec2-user/logs/ -type f -mtime +30 -delete
+    echo "Old files deleted"
+else
+    echo "Archive Creation for logs files failed"
+fi
+--------------------------------------------------------------------------------------------------------------
+While Loop
+
+Syntax:
+
+while [condition]
+do
+    commands
+done
+
+(or)
+
+while [condition]; do
+    commands
+done
+--------------------------------------------------------------------------------------------------------------
+Example: Find the sum of n numbers
+
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+sum=0
+
+while [ $n -gt 0 ]
+do
+    sum=$(($sum + $n))
+    n=$(($n - 1))
+done
+
+echo "The sum of n numbers is $sum"
+--------------------------------------------------------------------------------------------------------------
+Example: Find the factorial of the number
+
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+fact=1
+
+while [ $n -gt 1 ]
+do
+    fact=$(($fact * $n))
+    n=$(($n - 1))
+done
+
+echo "The factorial of the number is $fact"
+--------------------------------------------------------------------------------------------------------------
+Example: Find the sum of odd numbers upto n
+
+Example - N=5
+sum=1+3+5=9
+
+Example - N=8
+sum=1+3+5+7=16
+
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+sum=0
+
+while [ $n -gt 0 ]
+do
+    if [ $(($n%2)) -ne 0 ]; then
+        sum=$(($sum + $n))
+    fi
+    n=$(($n - 1))
+done
+
+echo "The sum of odd numbers is $sum"
+
+(or)
+
+
+#!/bin/bash
+
+echo "Enter the N Value"
+read n
+
+sum=0
+i=1
+
+while [ $i -le $n ]
+do
+    sum=$(($sum + $i))
+    i=$(($i+2))
+done
+
+echo "The sum of odd numbers is $sum"
+--------------------------------------------------------------------------------------------------------------
+Assignment
+1. Try to find the file that is unique for Redhat/Ubuntu in /etc
+2. Try to Install Jenkins on the Server [jenkins.io]
+--------------------------------------------------------------------------------------------------------------
+Example: Install Jenkins
+
+#!/bin/bash
+
+distro=$(grep "^ID=" /etc/os-release | cut -d "=" -f2 | tr -d '"')
+
+echo "Running on $distro"
+
+if [ $distro == "ubuntu" ] || [ $distro == "debian" ]; then
+    
+    echo "Updating and Installing Required Packages"
+    sudo apt update -y
+    sudo apt install fontconfig openjdk-21-jre -y
+
+    echo "Downloading Repos"
+    sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian/jenkins.io-2023.key
+    echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+    https://pkg.jenkins.io/debian binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+    
+    echo "Installing Jenkins"
+    sudo apt update -y
+    sudo apt install jenkins -y
+
+    sudo systemctl start jenkins
+
+elif [ $distro == "rhel" ] || [ $distro == "centos" ] ; then
+    
+    echo "Updating and Installing Required Packages"
+    sudo yum update -y
+    sudo yum install fontconfig java-21-openjdk -y
+
+    echo "Downloading Repos"
+    sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+    echo "Installing Jenkins"
+    sudo yum update -y
+    sudo yum install jenkins -y
+    sudo systemctl daemon-reload
+
+    sudo systemctl start jenkins
+
+elif [ $distro == "fedora" ]; then
+
+    echo "Updating and Installing Required Packages"
+    sudo dnf upgrade -y
+    sudo dnf install fontconfig java-21-openjdk -y
+
+    echo "Downloading Repos"
+    sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+    echo "Installing Jenkins"
+    sudo dnf upgrade -y
+    sudo dnf install jenkins -y
+    sudo systemctl daemon-reload
+
+    sudo systemctl start jenkins
+
+else
+    echo "Unsupported Distribution: $distro"
+fi
+
+echo "Access Jenkins at $(curl -s ifconfig.me):8080"
+

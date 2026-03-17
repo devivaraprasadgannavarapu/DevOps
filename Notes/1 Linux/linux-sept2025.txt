@@ -1,0 +1,1601 @@
+------------------------------------------------------------
+
+Linux:-
+
+Linux is a open-source, Unix-like operating systems
+that is based on the Linux kernel and
+known for its stability, security, and flexibility.
+
+------------------------------------------------------------
+
+EC2 Instance:-
+
+An EC2 instance is a virtual server in the cloud
+that you can rent from Amazon Web Services (AWS) to run your applications.
+It provides resizable compute capacity
+
+------------------------------------------------------------
+Linux Architecture:-
+------------------------------------------------------------
+Explanation:
+Linux architecture is typically explained in **four main layers**, stacked one on top of the other.
+
+------------------------------------------------------------
+
+1. Hardware Layer 🖥️
+
+- Physical components: **CPU, RAM, disks, network cards**.
+- Linux kernel interacts with hardware via **device drivers**.
+
+------------------------------------------------------------
+
+2. Kernel Layer 🧠
+
+- The **core of Linux OS**.
+- Manages:
+  - Process management (scheduling, multitasking)
+  - Memory management (RAM, swap)
+  - Device management (drivers, I/O)
+  - File systems (ext4, xfs, etc.)
+  - System calls (interface between user programs and kernel)
+
+------------------------------------------------------------
+
+3. System Libraries 📚
+
+- Provide special functions/programs that apps use to interact with the kernel.
+- Instead of talking directly to the kernel (which is complex), apps use library functions.
+- Example: **glibc (GNU C Library)**.
+- APIs like `open()`, `read()`, `printf()` → save apps from talking to kernel directly.
+
+------------------------------------------------------------
+
+4. User Space / Applications 👤
+
+- Everything the user interacts with:
+  - **Shells** (bash, zsh, sh)
+  - **Commands** (ls, grep, cat)
+  - **Applications** (browsers, editors, servers, etc.)
+
+💡 **The Shell** is part of the **User Space layer**.
+It acts as a **command interpreter** between the **user** and the **kernel**.
+
+------------------------------------------------------------
+
+✅ Summary Diagram
+
++---------------------+   ← User Space (Applications, Shells, Commands)
+|   Applications      |
+|   Shells (bash, sh) |   ← Shell lives here ⚡
++---------------------+
+|   System Libraries  |
++---------------------+
+|       Kernel        |   ← Core (process, memory, device, file system mgmt)
++---------------------+
+|      Hardware       |   ← CPU, RAM, Disks, Devices
+-----------------------
+04-09-25 - class 1
+------------------------------------------------------------
+Linux Commands:-
+
+Creating Files and Directories
+
+touch <file-name> --> TO create a file
+mkdir <directory-name> --> To create a directory
+
+------------------------------------------------------------
+
+Listing Files and Directories
+
+ls --> To list all the files and directories in the present working directory
+ls -l --> To list all files and directories in long format
+ls -lt --> To sort the files and directories by their modified time
+ls -lrt --> TO sort by modified time in reverse order
+
+------------------------------------------------------------
+------------------------------------------------------------
+
+To check the current directory
+
+pwd --> Print Working Directory
+
+------------------------------------------------------------
+
+Change Directory:
+
+cd <directory-name> --> TO change or get inside a directory
+cd .. --> To go back to one previous directory
+cd --> To goto home path [/home/ec2-user]
+
+------------------------------------------------------------
+
+VI - Text Editor
+
+vi <file-name> --> To open a file for editing
+
+Note: VI Editor always opens in command mode
+
+------------------------------------------------------------
+
+i --> To goto insert mode
+esc --> To goto command mode
+
+------------------------------------------------------------
+
+esc + :w --> To save the file
+esc + :q --> To quit from the file
+esc + :wq --> To save and quit from the file
+esc + q! --> To quit from the file forcefully i.e without saving the changes
+
+w - write
+q - quit
+! - Override
+
+------------------------------------------------------------
+
+cat <file-name> --> To see the contents of the file
+cat -n <file-name> --> To see the contents of the file along with reference numbers
+
+Print File Content in Reverse Order
+
+------------------------------------------------------------
+
+Using tac (reverse of cat)
+tac file.txt
+- Prints lines from bottom to top
+- Easiest method
+
+Reverse characters in each line (not lines)
+rev file.txt
+- Example: `Hello` → `olleH`
+
+Using sed
+sed '1!G;h;$!d' file.txt
+- Stores lines in hold space, prints in reverse
+
+Using awk
+awk '{line[NR]=$0} END {for(i=NR;i>0;i--) print line[i]}' file.txt
+- Saves lines in array, prints backwards
+
+✅ Summary:
+- Reverse lines → `tac file.txt`
+- Reverse characters → `rev file.txt`
+
+------------------------------------------------------------
+
+To set Reference Numbers in VI
+
+esc + :set nu --> To set the reference numbers
+esc + :set nonu --> To remove the reference numbers
+
+---------------------------------------------------------------
+
+To search for Strings/Patterns in VI
+
+esc + /<pattern> --> To search for strings or patterns
+esc + /\c<pattern> --> To search by ignoring the case
+
+n -- To goto next occurence of the string
+shift + n -- TO goto previous occurence of the string
+
+------------------------------------------------------------
+
+Find and Replace Strings
+
+esc + %s/<old-pattern>/<new-pattern>/igc --> To find and replace words in VI Editor
+
+% -- All lines of the file
+s -- Substitute
+i -- Ignore the case
+g -- Replace all occurence in each line
+c -- Confirm before Replacing [y - confirm, n - skip, q - quit, a - replace all]
+
+esc + 3s/<old-pattern>/<new-pattern>/g --> To find and replace only on 3rd line
+esc + 3,8s/<old-pattern>/<new-pattern>/g --> To find and replace from 3rd to 8th line of the file
+esc + 3,$s/<old-pattern>/<new-pattern>/g --> To find and replace from 3rd line to end of the file
+
+esc + :%s/<pattern>//gn --> To count the number of occurences of a particular word
+
+------------------------------------------------------------
+
+To delete lines in VI
+
+esc + dd --> To delete a line
+esc + 3dd --> To delete 3 lines from where the cursor is located
+
+esc + :3d --> To delete the 3rd line of the file
+esc + :3,8d --> To delete from 3rd to 8 lines of the file
+esc + :3,$d --> To delete from 3rd line to end of the file
+esc + :%d --> To delete all lines
+
+------------------------------------------------------------
+
+esc + :undo --> To undo the changes
+esc + :redo --> To redo the changes
+
+------------------------------------------------------------
+Head - Used to print required number of lines from the beginning of the the file
+
+head <file-name> --> To print the first 10 lines of the file
+head -5 <file-name> --> To print the first 5 lines of the file
+
+------------------------------------------------------------
+Tail - Use to print required nummber of lines from the bottom of the file
+
+tail <file-name> --> To print the last 10 lines of the file
+tail -5 <file-name> --> To print the last 5 lines of the file
+------------------------------------------------------------
+Less - Used to view contents of the file interactively
+
+less <file-name> --> View contents of the file using less command
+
+f -- To go one page forward
+b -- To go one page backward
+q -- TO quit from less command
+
+less -N <file-name> --> To view contents with reference numbers
+------------------------------------------------------------
+Man Pages and Help
+
+man <command> --> To see the Manual Page of the commnad, Which includes all the details of the command
+<command> --help --> To get a brief summary of the command
+------------------------------------------------------------
+Copy, Move and Remove
+
+Copy Files and Directories
+
+cp <original-file-path> <new-file-path> --> To copy a file in Linux
+cp -R <original-directory-path> <new-directory-path> --> To copy a directory in Linux
+
+cp <original-file-path> <directory-path>/ --> To copy a file to a particular directory with the same file name
+cp <original-file-path> <directory-path>/<new-file-name> --> To copy a file to a particular directory with the new file name
+
+Examples:
+
+cp Dockerfile Dockerfile.bkp
+cp Dockerfile docker/
+------------------------------------------------------------
+Move Files and Directories
+
+mv <original-file-path> <new-file-path> --> To rename a file in Linux
+mv <original-directory-path> <new-directory-path> --> To rename a directory in Linux
+
+mv <original-file-path> <directory-path>/ --> To move a file to a particular directory with the same file name
+mv <original-file-path> <directory-path>/<new-file-name> --> To move a file to a particular directory with the new file name
+
+Examples:
+
+mv Dockerfile Dockerfile.bkp
+mv Dockerfile docker/
+------------------------------------------------------------
+Remove Files and Directories
+
+rm <file-name> --> To remove a file
+rm -R <directory-name> --> To remove a Directory
+
+Using Wildcards
+
+rm f* --> TO remove all files that start with the letter f
+rm *.sh --> To remove all files that end with .sh [Shell Script Files]
+rm f*.sh --> To remove all the files that start with letter f and end with .sh
+------------------------------------------------------------
+Assignment: Find the command to show the contents of the file in reverse
+------------------------------------------------------------
+Echo -- Print
+
+echo "<String>" --> To print text on the terminal
+	
+Example:
+
+echo "Hello" --> To print hello on the terminal
+
+echo -e "Hello \nHow are you" -->? To print the text in new lines using \n esacpe backslash character
+------------------------------------------------------------
+Redirect [>] and Append [>>]
+
+<command> > <file-name> --> TO redirect the standard output of a command to a file
+
+Example:
+
+echo "hello" > r1.txt --> To store the output of echo command to the file r1.txt
+
+<commnad> >> <file-name> --> To append the output of a command to a file
+
+Example:
+
+echo "how are you" >> r1.txt --> To append the output of the echo command to the file r1.txt [Data get added to end of the file]
+---
+Pipe [|]
+
+<command1> | <command2> --> To pass the output of command1 as input to command2
+
+Example:
+
+head -10 <file-name> | tail -5 --> To print lines 5 to 10 in the file
+head -3 <file-name> | wc -w --> To find the number of words in the first 3 lines of the file
+------------------------------------------------------------
+Word Count [wc]
+
+wc <file-name> --> TO check the total number of lines, words and characters present in the file
+
+wc -l <file-name> --> To print the total number of lines in the file
+wc -w <file-name> --> To print the total number of words in the file
+wc -c <file-name> --> To print the total number of characters in the file
+------------------------------------------------------------
+File and Disk Size
+
+df -h --> TO check the disk size and usage
+
+du -h <file/dir> --> To check the disk usage of a file or a directory
+stat -c %s <file/dir> --> To check the actual disk usage of a file or directory in bytes
+------------------------------------------------------------
+GREP -- Used to search for strings/patterns inside files
+
+grep "<string>" <file-name> --> To print all the lines with the matching string in the file
+
+grep -i "<string>" <file-name> --> To print all the lines with the matching string by ignoring the case
+
+grep -n "<string>" <file-name> --> To print all the lines with the matching string along with their line numbers
+
+grep -e "<string1>" -e "<string2>" <file-name> --> To search for multiple strings
+
+grep -lR "<string>" --> To display the names of the files that contain the matching string
+
+grep -v "<string>" <file-name> --> To print all the lines that do not have the matching string
+
+grep -c "error" file.txt   --> Count matching lines
+
+grep -ic "error" file.txt  --> count how many lines contain the word "error" (case-insensitive) in file.txt
+
+grep -cw "error" file.txt  --> Count exact word matches
+
+grep "error" file.txt | wc -l  --> Using wc -l with grep - Same as `grep -c`, but useful for piping
+
+grep "^<string>" <file-name> --> To print all the lines where the matching string is present at the start of the line
+grep "<string>$" <file-name> --> To print all the lines where the matching string is present at the end of the line
+------------------------------------------------------------
+Find - TO search for Files and Directories
+
+find -name <file/dir-name> --> To search for all files and directories by their name
+
+find -iname <file/dir-name> --> To search for all files and directories by their name with case ignored
+
+find -type f -name <file/dir-name> --> To search only files
+find -type d -name <file/dir-name> --> To search only Directories
+
+find <path> -name <file/dir-name> --> To search for files and directories in a particular path
+
+find -mtime -7 --> Find all the files and directories created in the last 7 days
+find -mtime +7 --> Find all the files and directories created more than 7 days ago
+
+find -maxdepth 1 -name <file/dir-name> --> To find all the files and directories in the current directory only
+
+------------------------------------------------------------
+Explanation:
+The **find** command in Linux is **recursive by default**, meaning it searches through the specified directory and all its subdirectories.
+You can control its depth with `-maxdepth` and `-mindepth`.
+
+------------------------------------------------------------
+Verify Recursive Behavior:
+
+# Create test directories and files
+mkdir -p testdir/subdir
+touch testdir/file1 testdir/subdir/file2
+
+# Run find on the parent directory
+find testdir -type f
+
+Output:
+testdir/file1
+testdir/subdir/file2
+
+✅ Proves recursion happens by default.
+------------------------------------------------------------
+Control Recursion:
+
+- Limit depth:
+  find testdir -maxdepth 1 -type f
+  → Searches only the current directory.
+
+- Minimum depth:
+  find testdir -mindepth 2 -type f
+  → Starts searching after level 2.
+
+- Exactly 2 levels deep:
+  find /home/user -mindepth 2 -maxdepth 2 -name "*.txt"
+
+------------------------------------------------------------
+Extra Example:
+
+# Find only files/dirs in the current directory
+find -maxdepth 1 -name <file/dir-name>
+
+# Delete files only in subfolders
+find /home/user -mindepth 2 -type f -name "*.log" -delete
+
+------------------------------------------------------------
+✅ In short:
+- **find is recursive by default**.
+- Use `-maxdepth` to limit depth.
+- Use `-mindepth` to skip top levels.
+------------------------------------------------------------
+sed - Stream Editor - Find/Replace, Print, Delete etc
+
+Find and Replace strings
+
+sed 's/<old-pattern>/<new-pattern>/ig' <file-name> --> To find and replace words in file [File does not get modified]
+
+s -- Substitute
+i -- Ignore the case
+g -- Replace all occurence in each line
+
+sed -i 's/<old-pattern>/<new-pattern>/ig' <file-name> --> To insert the changes to the original file
+
+sed 3s/<old-pattern>/<new-pattern>/g --> To find and replace only on 3rd line
+sed + 3,8s/<old-pattern>/<new-pattern>/g --> To find and replace from 3rd to 8th line of the file
+sed + 3,$s/<old-pattern>/<new-pattern>/g --> To find and replace from 3rd line to end of the file
+------------------------------------------------------------
+Delete Lines:
+
+sed '3d' <file-name> --> To delete the 3rd line of the file
+sed '3,8d' <file-name> --> To delete from 3rd line to 8th line of the file
+sed '3,$d' <file-name> --> To delete from 3rd line to end of the file
+
+sed '3d;8d' <file-name> --> To delete the 3rd and 8th line of the file
+------------------------------------------------------------
+Print Lines:
+
+sed -n '3p' <file-name> --> To print the 3rd line of the file
+sed -n '3,8p' <file-name> --> To print from 3rd line to 8th line of the file
+sed -n '3,$p' <file-name> --> To print from 3rd line to end of the file
+
+sed -n '3p;8p' <file-name> --> To print the 3rd and 8th line of the file
+------------------------------------------------------------
+Assignments:
+
+1. Grep Flag to display all the file names that do not have the matching string
+2. Find all the files that got created in the last 1 hour
+3. Find all the files that got created in the last 15 mins
+4. Find all the files that have a size of more than 1 MB
+5. Find all the empty files
+6. Find all the empty files and delete them
+------------------------------------------------------------
+------------------------------------------------------------
+Delete Empty Files (Alternate Methods)
+------------------------------------------------------------
+Explanation:
+There are multiple ways to delete empty files in Linux using the `find` command.
+Some methods are faster, some are more portable across different systems.
+
+------------------------------------------------------------
+1. Using `find` with `-exec`
+
+- Runs `rm` on each empty file found.
+- Works the same as `-delete` but is **more portable**.
+
+Example:
+find /path/to/dir -type f -empty -exec rm {} \;
+
+------------------------------------------------------------
+2. Using `find` + `xargs`
+
+- Deletes all empty files found.
+- Useful as a **quick alternative**, especially when many files exist.
+
+Example:
+find /path/to/dir -type f -empty | xargs rm
+
+------------------------------------------------------------✅ Key Difference
+
+| Method               | Portability | Speed     | Best Use Case                          |
+|-----------------------|-------------|-----------|----------------------------------------|
+| `-delete`            | Limited     | Fastest   | When GNU `find` is available.          |
+| `-exec rm {} \\\\;`     | High        | Slower    | For maximum portability across distros |
+| `find … \\\\| xargs rm` | Medium      | Fast      | When many files and `xargs` is safe    |
+---
+💡 Tip:
+Bash globbing can also help if you only want files in a single directory.
+
+------------------------------------------------------------
+📌 Real-World Example
+
+Delete empty log files in `/var/log`:
+find /var/log -type f -empty -exec rm {} \;
+------------------------------------------------------------
+
+Cut - Used to cut the data along the column
+
+cut -d " " -f3 <file-name> --> To print the 3rd column of the file
+cut -d " " -f3-6 <file-name> --> To print from 3rd to 6th columns of the file
+cut -d " " -f3,6 <file-name> --> To print from 3rd and 6th columns of the file
+
+d - Delimiter [Used to specify the seperator between the columns]
+f - fields
+------------------------------------------------------------
+AWK - Cut the file column and row wise
+
+awk '{print}' <file-name> --> To print the contents of the file
+
+awk -F " " '{print$3}' <file-name> --> To print the 3rd column of the file
+awk -F " " '{print$3,$6}' <file-name> --> To print from 3rd and 6th columns of the file
+
+awk -F " " '{print$NF}' <file-name> --> To print the last column of the file
+awk -F " " '{print$(NF-1)}' <file-name> --> To print the last but one column of the file
+
+awk -F " " '{print NF}' <file-name> --> To print the total number of columns in each row of the file
+
+F - Field Seperator [Space is the default Field Seperator]
+NF - Number of fields [Columns]
+
+awk 'NR==3{print}' <file-name> --> To print 3rd row or line of the file
+awk 'NR==3,NR==6{print}' <file-name> --> To print from 3rd to 6th row of the file
+awk 'NR==3;NR==6{print}' <file-name> --> To print from 3rd and 6th row of the file
+
+awk 'END{print NR}' <file-name> --> To print the total number of rows in the file
+
+NR - Number of Rows
+
+------------------------------------------------------------
+cut vs awk
+------------------------------------------------------------
+Explanation:
+Both cut and awk are used to extract fields from text in Linux, but they work differently.
+
+------------------------------------------------------------
+1. cut
+
+- Extracts columns or fields based on a delimiter or byte/character position.
+- Simple and fast, but limited in functionality.
+
+Example:
+echo "a:b:c:d" | cut -d":" -f2
+# Output: b
+
+Options:
+- `-d` → delimiter
+- `-f` → field number
+
+Limitation:
+Cannot perform calculations or complex conditions.
+------------------------------------------------------------
+2. awk
+
+- A full text-processing language.
+- Can extract fields, perform calculations, apply conditions, and format output.
+
+Example:
+echo "a:b:c:d" | awk -F":" '{print $2}'
+# Output: b
+
+Options:
+- `-F` → field separator
+- `$2` → second field
+
+Capabilities:
+- Perform sums, averages, if-else, loops, and formatting.
+------------------------------------------------------------
+✅ Key Difference
+
+| Feature            | cut        | awk             |
+|--------------------|------------|-----------------|
+| Complexity         | Simple     | Advanced        |
+| Delimiters         | Fixed      | Flexible (-F)   |
+| Calculations       | No         | Yes             |
+| Conditional logic  | No         | Yes             |
+| Speed              | Faster     | Slightly slower |
+------------------------------------------------------------
+------------------------------------------------------------
+SUDO - Super User Does
+
+Sudo Command givers permissions for users to execute commands as root or super user
+
+sudo <command> --> To execute a command with super user privileges
+
+Example:
+
+sudo apt install git --> To install git on the server
+
+To give an user the sudo permission, The user needs to be added to the sudoers file
+
+sudo visudo /etc/sudoers --> To edit the sudoers file
+
+To give an user Sudo permission in Sudoers File:
+<username> ALL=(ALL) NOPASSWD: ALL
+
+To give a group Sudo permission in Sudoers File:
+%<groupname> ALL=(ALL) NOPASSWD: ALL
+------------------------------------------------------------
+Adding Users:
+
+sudo useradd <username> --> To create an user
+sudo passwd <username> --> To set a password for the user
+
+sudo userdel <username> --> To delete the user
+sudo userdel -r <username> --> To delete the user along with his home directory
+
+getent passwd (or) cat /etc/passwd --> To check all the users in the server
+
+Switch Users:
+
+su <username> --> To switch to a particular user
+sudo su <username> --> To switch without proividing password of the user
+
+sudo su - --> To switch to the root user
+
+------------------------------------------------------------
+Change Hostname
+
+Explanation:
+Updates the system’s name for identification.
+
+Commands:
+sudo hostnamectl set-hostname my-new-hostname
+hostnamectl                  --> Verify
+
+Tip:
+Also update /etc/hosts for local resolution.
+
+------------------------------------------------------------
+Lock/Unlock Users
+
+Explanation:
+Locking a user prevents login but doesn’t kill active sessions.
+
+Commands:
+# Lock user
+sudo usermod -L username
+sudo passwd -l username
+
+# Unlock user
+sudo usermod -U username
+sudo passwd -u username
+
+# Check status
+sudo passwd -S username
+
+Output:
+• L → Locked
+• P → Password set
+------------------------------------------------------------
+Adding Groups
+
+sudo groupadd <groupname> --> To create a group
+sudo groupdel <groupname> --> To delete a group
+
+sudo gpasswd -a <username> <groupname> --> To add an user to a group
+sudo gpasswd -d <username> <groupname> --> To delete an user from a group
+
+getent group (or) cat /etc/group --> To see all the groups on the server
+------------------------------------------------------------
+Permissions In Linux:
+
+r - Read Permission
+w - Write Permission
+x - Execute Permission
+
+rw-     r--     r--
+[Owner] [Group] [Others]
+
+r - 4
+w - 2
+x - 1
+- - 0
+------------------------------------------------------------
+Change Permissions:
+
+chmod 664 <file-name> --> To give the owner rw, group rw and others r permissions
+chmod 776 <file-name> --> To give the owner rwx, group rwx and others rw permissions
+chmod 644 <file-name> --> To give the owner rw, group r and others r permissions
+chmod 400 <file-name> --> To give the owner r, group - and others - permissions
+
+chmod u+x <file-name> --> To add execute permission for the owner
+chmod g+rw <file-name> --> To add read and write permissions for the group
+chmod u+x,g-w,o-rwx --> To add execute permission for owner, Remove write permission for group, Remove read/write/execute permission from others
+
+u - Owner
+g - Group
+o - Others
+------------------------------------------------------------
+Changing Ownership and Group for Files and Directories
+
+chown <username> <file> --> To change the owner of the file
+chgrp <groupname> <file> --> To change the group of the file
+
+chown <username>:<groupname> <file> --> TO change both owner and group
+------------------------------------------------------------
+Default Permissions
+
+Files - 666
+Directories - 777
+
+umask 022 --> To change the default permissions of files to 644 and directories to 755
+umask 002 --> To change the default permissions of files to 664 and directories to 775
+umask 066 --> To change the default permissions of files to 600 and directories to 711
+umask 666 --> To change the default permissions of files to 000 and directories to 111
+------------------------------------------------------------
+Miscellaneous Commands:
+
+who --> TO check all the users who are logged in on the server
+whoami --> To check the current user
+id --> To check the current users UID, GID, and the groups user belongs to
+------------------------------------------------------------
+
+
+Link - To create a shortcut for a file or Directories
+
+ln <original-file-path> <hardlink-path> --> To create a hard link
+ln -s <original-file-path> <softlink-path> --> To create a soft/symbolic link
+
+Example:
+
+ln -s d1/d2/d3/d4/d5/sample test
+
+A soft link will point to the path of the original file and as soon as the original file is moved or deleted, The softlink stops working
+
+Whereas a hardlink directly points to the memory location [inode] of the original file. Therefore even after the original file is removed or moved - The hardlink will still work
+
+hard link will only work for files whereas softlink works for both files and directories
+
+inode - It is an unique identification number of the file pointint to its memory location
+
+ls -i --> To check the inode of files and directories
+
+------------------------------------------------------------
+Check Inode Usage
+
+Explanation:
+Inodes track file metadata. Running out of inodes = no new files.
+
+Examples:
+df -i                    --> Show inode usage
+sudo du --inodes -d 1 /   --> Per directory
+find /var/log | wc -l     --> Count files
+------------------------------------------------------------
+PS - Process
+
+ps -ef --> To list all the process from all users running on the server
+ps -u <username> --> To list process created by a particular user
+
+kill <PID> --> To terminate a process [Signal - 15]
+kill -9 <PID> --> To forcefully kill a process
+------------------------------------------------------------
+top --> TO check all the process, CPU, Memory Usage in a live interactive dashboard
+
+k -- to kill a process by its PID
+u -- To check process started by an user
+q -- quit from top
+------------------------------------------------------------
+free -h --> To check system memory usage
+------------------------------------------------------------
+Managing Services:
+
+sudo service <service-name> stop --> To stop a service
+sudo service <service-name> start --> To start a service
+service <service-name> status --> To check the status of the service
+
+sudo systemctl stop <service-name>  --> To stop a service
+sudo systemctl start <service-name>  --> To start a service
+systemctl status <service-name>  --> To check the status of the service
+
+Example:
+
+systemctl status crond
+-----------------------------------------------------------------------------------------
+tee - Redirect and Append
+The tee command in Linux is used to read from standard input and write to both standard output and a file at the same time.
+
+<command> | tee <filename> --> To redirect the output of a command to a file and also print the output on the terminal
+<command> | tee <filename1> <filename2> --> To redirect the output to multiple files
+
+<command> | tee -a <filename> --> To append the output to a file
+
+Example:
+
+echo hello | tee red.txt
+------------------------------------------------------------
+xargs
+---
+Explanation:
+The **xargs** command in Linux is used to build and execute command lines from standard input.
+It’s helpful when you want to pass output from one command as arguments to another.
+
+------------------------------------------------------------
+Basic Usage
+
+echo "file1 file2 file3" | xargs rm
+--> Deletes file1, file2, and file3.
+--> Reads input from echo and passes it to rm.
+---
+Common Examples
+
+Using find with xargs:
+find . -name "*.log" | xargs rm
+--> Deletes all .log files found.
+
+Limiting arguments per command:
+cat files.txt | xargs -n 2 echo
+--> Runs echo with 2 arguments at a time.
+
+Prompt before execution:
+cat files.txt | xargs -p rm
+--> Asks for confirmation before deleting each batch.
+
+Summary
+
+Purpose:
+Convert input (like find results) into command arguments.
+
+Useful with:
+find, grep, echo, or any command producing a list.
+------------------------------------------------------------
+Miscellaneous Commands:
+
+ping <hostname/ip/website> --> To check and ping another server
+
+uname -a --> To check the details of the server like timezone, architecture etc
+
+cat /etc/os-release --> To check the information about the linux distribution of the server
+------------------------------------------------------------
+SSH - Secure Shell or Secure Socket Shell
+
+SSH is a network protocol that enables an user to access a remote server in a secure way
+
+Default Port: 22
+
+Port: A port is a virtual point where network connections start and end
+
+Examples:
+
+Jenkins - 8080
+Tomcat  - 8080
+HTTP    - 80
+HTTPS   - 443
+Nginx   - 80
+Kubernetes API Server - 6443
+
+SSH Command:
+
+ssh -i <private-key> <username>@<ip-address> --> To ssh into a server
+
+Example:
+
+ssh -i key ubuntu@13.201.126.26
+------------------------------------------------------------
+SSH Passwordless Connections:
+
+To establish a passwordless connection, Generate a key pair using ssh-keygen command. Copy the contents of the newly generated public key to the authorized keys file under .ssh folder on the server to which passwordless connection has to be established
+
+ssh <username>@<ip-address> --> To ssh into a server when passwordless connection is established
+
+Example:
+
+ssh key ubuntu@13.201.126.26
+------------------------------------------------------------
+SCP - To copy files over ssh
+
+scp -i <private-key> <file/dir> <username>@<ip-address>:<remote-server-path> --> To copy a file over ssh
+
+Example:
+
+scp -i key hlink ubuntu@172.31.32.48:/home/ubuntu/
+
+If passwordless connection is established
+
+scp <file/dir> <username>@<ip-address>:<remote-server-path> --> To copy a file over ssh with passwordless connection
+------------------------------------------------------------
+Install Packages:
+
+sudo apt install <package-name> --> To install a package on Redhat
+
+Example:
+
+sudo yum install java
+------------------------------------------------------------
+netstat Command in Linux
+------------------------------------------------------------
+Explanation:
+The **netstat** command is used to display **network connections, routing tables, interfaces, and statistics**.
+⚠️ Note: It’s considered **deprecated** and replaced with **ss** in many modern Linux distributions.
+
+------------------------------------------------------------
+Basic Usage:
+
+- Show active connections:
+  netstat
+
+---
+Common Flags:
+
+- `-a` → Show all sockets (listening + non-listening)
+  netstat -a
+
+- `-t` → Show TCP connections only
+  netstat -t
+
+- `-u` → Show UDP connections only
+  netstat -u
+
+- `-l` → Show only listening sockets
+  netstat -l
+
+- `-n` → Show numeric addresses instead of resolving hostnames
+  netstat -an
+
+- `-p` → Show PID and program name using the socket
+  sudo netstat -tulnp
+
+- `-r` → Show kernel routing table
+  netstat -r
+
+- `-i` → Show network interfaces with statistics
+  netstat -i
+
+- `-s` → Show summary statistics for each protocol
+  netstat -s
+
+---
+✅ Quick Example:
+List all listening TCP/UDP ports with process IDs:
+sudo netstat -tulnp
+
+------------------------------------------------------------
+📌 Availability of netstat:
+
+- ✅ Still works (but might need `net-tools` package installed):
+  - **Ubuntu (older versions like 16.04, 18.04)**
+  - **CentOS 6/7**
+  - **Debian 9/10**
+  - **Older Fedora releases**
+
+- ⚠️ Not available by default (replaced by `ss`):
+  - **Ubuntu 20.04+ and later**
+  - **CentOS 8, Stream, and RHEL 8+**
+  - **Fedora 31+**
+  - **Arch Linux**
+  - **Alpine Linux**
+
+👉 In modern distros, you must install `net-tools` manually if you still want `netstat`.
+
+------------------------------------------------------------
+Modern Alternative: `ss`
+
+- Show all listening sockets:
+  ss -l
+
+- Show TCP connections:
+  ss -t
+
+- Show UDP connections:
+  ss -u
+
+- Show PID/programs using sockets:
+  sudo ss -tulnp
+
+------------------------------------------------------------
+✅ Comparison Table
+
+| Task                                | netstat Command     | ss Command            |
+|-------------------------------------|---------------------|-----------------------|
+| Show listening sockets              | netstat -l          | ss -l                 |
+| Show TCP connections                | netstat -t          | ss -t                 |
+| Show UDP connections                | netstat -u          | ss -u                 |
+| Show PID and program using socket   | netstat -tulnp      | ss -tulnp             |
+| Show routing table                  | netstat -r          | ip route / ss -r      |
+| Show protocol statistics            | netstat -s          | ss -s                 |
+
+------------------------------------------------------------
+Check IP Address in EC2
+
+Explanation:
+Your EC2 instance has two types of IPs:
+• Private IP: Used within the AWS VPC for internal communication.
+• Public IP: Used to access the instance from the internet.
+
+Examples:
+# Private IP
+hostname -I
+ip addr show eth0 | grep inet
+
+# Public IP
+curl ifconfig.me
+curl http://169.254.169.254/latest/meta-data/public-ipv4
+
+Tip:
+Use curl checkip.amazonaws.com for a quick public IP check.
+
+------------------------------------------------------------
+Block IP Address
+
+Explanation:
+Use firewall rules to deny traffic from specific IPs.
+
+Example:
+sudo iptables -A INPUT -s 1.2.3.4 -j DROP
+
+To make persistent:
+sudo apt install iptables-persistent
+sudo netfilter-persistent save
+------------------------------------------------------------
+Daemon Processes
+
+Explanation:
+Daemons are background services that start at boot and run without user interaction.
+
+Examples:
+• sshd: Handles SSH connections
+• httpd: Apache web server
+• crond: Runs scheduled cron jobs
+
+Tip:
+Daemon names often end in d.
+------------------------------------------------------------
+Orphan Process in Linux
+------------------------------------------------------------
+Explanation:
+An **orphan process** in Linux is a process whose parent has terminated, but the process itself is still running.
+When this happens, the **init process (PID 1)** becomes its new parent.
+Orphans are usually harmless, as the OS will clean them up after completion.
+
+------------------------------------------------------------
+Example:
+
+# Parent process exits but child keeps running
+sleep 100 &      # run in background
+exit             # parent shell exits
+ps -ef | grep sleep
+
+Output: `sleep` process now has **PID 1** (init) as its parent.
+
+------------------------------------------------------------
+✅ In short:
+Orphan = parent gone, child still alive, adopted by init.
+------------------------------------------------------------
+
+Check Linux Version
+
+Explanation:
+Knowing your Linux version helps with package compatibility and troubleshooting.
+
+Examples:
+cat /etc/os-release  --> Shows distro name and version
+hostnamectl          --> Also shows kernel and architecture
+uname -r             --> Kernel version only
+
+Output Sample:
+NAME="Amazon Linux" VERSION="2023"
+
+---
+Viewing Logs
+
+Explanation:
+Logs help diagnose system issues, track activity, and monitor services.
+
+Examples:
+# System logs
+sudo less /var/log/syslog      --> Ubuntu
+sudo less /var/log/messages    --> RHEL/Amazon Linux
+
+# Service logs
+sudo journalctl -u ssh
+sudo journalctl -xe           --> Recent errors
+
+# Real-time monitoring
+sudo tail -f /var/log/messages
+
+---
+Swap Memory Setup
+
+Explanation:
+Swap memory acts as overflow space when your RAM is full. It’s slower than RAM but prevents crashes under heavy load.
+When RAM runs out, inactive pages are moved to swap so your system doesn’t crash.
+
+Steps to Create 512MB Swap File:
+# 1. Allocate space
+sudo fallocate -l 512M /swapfile
+
+# 2. Secure the file
+sudo chmod 600 /swapfile
+
+# 3. Format as swap
+sudo mkswap /swapfile
+
+# 4. Enable swap
+sudo swapon /swapfile
+
+# 5. Verify
+swapon --show
+free -h
+
+Make it permanent:
+Add this line to /etc/fstab:
+/swapfile swap swap defaults 0 0
+
+Tip:
+Use dd instead of fallocate if your system doesn’t support it:
+sudo dd if=/dev/zero of=/swapfile bs=1M count=512
+
+Delete Swap File:
+# Turn off swap
+sudo swapoff /swapfile
+
+# Remove file
+sudo rm /swapfile
+
+# Remove entry from /etc/fstab
+sudo nano /etc/fstab  --> Delete the swapfile line
+
+Verify:
+swapon --show
+free -h
+---
+Swap memory in Linux has three main types:
+
+Swap Partition ✅
+
+A dedicated partition on the disk used solely for swap.
+
+Advantages: Faster than swap files, reliable.
+
+Created during OS installation or later via partitioning tools.
+
+Swap File 📄
+
+A regular file on your filesystem used as swap.
+
+Advantages: Easier to create, resize, or remove.
+
+Created with fallocate or dd commands and activated with mkswap and swapon.
+
+ZRAM (Compressed RAM Swap) 💨
+
+Uses a portion of RAM as compressed swap memory.
+
+Advantages: Faster than disk swap, saves disk I/O, good for low-memory systems.
+
+Usually configured in /etc/default/zram or via systemd services.
+---
+Kill Command & Signals
+
+Explanation:
+kill sends signals to processes. Common signals include:
+• SIGTERM (15): Graceful stop
+• SIGKILL (9): Force stop
+• SIGHUP (1): Restart
+• SIGSTOP: Pause
+• SIGCONT: Resume
+
+Examples:
+ps aux | grep nginx         --> Find nginx process
+kill -15 1234               --> Gracefully stop process with PID 1234
+kill -9 1234                --> Force kill
+kill -l                     --> List all signals
+
+---
+Schedule One-Time Job
+
+Tool: at command
+
+Steps:
+# Install at (if needed)
+sudo apt install at -y      --> Ubuntu
+sudo yum install at -y      --> RHEL
+
+# Enable service
+sudo systemctl enable --now atd
+
+# Schedule job
+echo "shutdown -h now" | at 23:30
+
+# Check jobs
+atq
+
+# Remove job
+atrm
+
+Interactive mode:
+at now + 10 minutes > echo "Hello World" > /tmp/test.txt
+---
+Compare Two Files
+
+Explanation:
+Use diff to find differences between files—great for config audits or code reviews.
+
+Examples:
+diff file1.txt file2.txt      --> Basic comparison
+diff -u file1.txt file2.txt   --> Unified format (used in patches)
+diff -y file1.txt file2.txt   --> Side-by-side comparison
+
+Output Sample:
+2c2
+< this is test
+---
+> this is new test
+
+---
+Watch Command
+
+Explanation:
+Repeats a command at intervals to monitor changes.
+
+Examples:
+watch -n 5 free -h             --> Check memory every 5 sec
+watch "ps -ef | grep ssh"      --> Monitor SSH processes
+
+Options:
+• -d: Highlight changes
+• -g: Exit when output changes
+
+---
+sort vs uniq
+---
+Explanation:
+Both **sort** and **uniq** are used to organize and filter text in Linux, but they work differently.
+
+---
+1. sort
+
+- Sorts lines in a file or output alphabetically or numerically.
+
+Examples:
+cat file.txt | sort
+sort -n file.txt   # Numeric sort
+sort -r file.txt   # Reverse sort
+
+---
+2. uniq
+
+- Filters adjacent duplicate lines.
+- Works best when input is sorted.
+
+Examples:
+sort file.txt | uniq
+sort file.txt | uniq -c   # Count duplicates
+
+---
+✅ Key Points
+
+| Feature            | sort                   | uniq                                  |
+|--------------------|------------------------|---------------------------------------|
+| Purpose            | Orders lines           | Removes or counts duplicate lines     |
+| Sorting            | Alphabetical/numerical | Needs sorted input for full effect    |
+| Extra Options      | -n (numeric), -r (rev) | -c (count), -d (only duplicates)      |
+---
+💡 Tip:
+To get sorted unique lines with counts in one go:
+sort file.txt | uniq -c
+---
+
+---
+strace Command in Linux
+---
+Explanation:
+The **strace** command is used to trace **system calls and signals** made by a program.
+It is very useful for debugging, troubleshooting, and understanding how a process interacts with the kernel.
+
+---
+Basic Usage:
+
+- Run a program with strace:
+  strace ls
+  → Shows all system calls `ls` makes (like `open()`, `read()`, `write()`).
+
+- Trace an already running process:
+  strace -p <PID>
+  → Attach to a running process by its PID.
+
+- Redirect strace output to a file:
+  strace -o trace.log ls
+
+- Count system calls:
+  strace -c ls
+  → Shows summary of system calls and their count.
+
+- Filter specific system calls:
+  strace -e openat ls
+  → Only shows `openat()` system calls made by `ls`.
+
+---
+✅ In short:
+`strace` is used to see what a process is doing at the **kernel level** (files opened, network calls, memory usage, etc.).
+---
+Sticky Bit in Linux
+---
+Explanation:
+The **sticky bit** is a **special permission** mostly used on **directories**.
+
+- When set on a directory:
+  - Only the **file’s owner (or root)** can delete/rename files inside it.
+  - Other users with write access cannot remove each other’s files.
+
+---
+Common Example:
+
+Check the `/tmp` directory:
+ls -ld /tmp
+
+Output:
+drwxrwxrw**t** 10 root root 4096 Sep 18 12:00 /tmp
+
+Notice the **t** at the end → sticky bit enabled.
+
+---
+How to Set Sticky Bit:
+
+- Symbolic mode:
+  chmod +t dirname
+
+- Numeric mode:
+  chmod 1777 dirname
+
+---
+✅ Summary:
+Sticky bit = **protects files in shared directories**.
+Even if everyone can write, only the owner/root can delete their own files.
+---
+Check OS and Its Details
+---
+Explanation:
+Linux provides multiple ways to check the OS type, version, and kernel details.
+
+---
+1. Check Linux distribution and version
+
+cat /etc/os-release
+
+Shows NAME, VERSION, ID, and more.
+
+---
+2. Short overview
+
+hostnamectl
+
+Displays OS, kernel, architecture, and hostname.
+
+---
+3. Kernel version only
+
+uname -r
+
+---
+4. Full system info
+
+uname -a
+
+Shows kernel, hostname, architecture, and build info.
+
+---
+✅ Quick Tip:
+Use `cat /etc/\\\*release\\\*` if `/etc/os-release` is not available.
+
+---
+📌 One-liner to show all details neatly:
+
+echo -e "OS: $(grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '\"')\nKernel: $(uname -r)\nArch: $(uname -m)"
+---
+
+/etc/fstab Breakdown
+
+Explanation:
+/etc/fstab defines how filesystems are mounted at boot.
+
+Example:
+UUID=xxxx / xfs defaults 0 0
+UUID=yyyy /boot/efi vfat defaults,... 0 2
+
+---
+Environment Variables
+
+Commands:
+export -p          --> Show exported variables
+env                --> Show environment variables
+set                --> Show all shell variables
+
+Example:
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+echo $JAVA_HOME
+
+Make permanent:
+Add to ~/.bashrc or ~/.profile:
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+---
+Alias
+
+Explanation:
+Aliases are shortcuts for long commands.
+
+Examples:
+alias ll='ls -lh --color=auto'
+alias gs='git status'
+unalias ll
+
+Make permanent:
+echo "alias ll='ls -lh --color=auto'" >> ~/.bashrc
+source ~/.bashrc
+---
+chsh – Change Default Shell
+
+Check current shell:
+echo $SHELL
+getent passwd $USER
+
+Change shell:
+chsh -s /bin/zsh
+
+List available shells:
+cat /etc/shells
+
+Note:
+Use sudo chsh -s /bin/bash username to change another user’s shell.
+---
+Foreground & Background Jobs
+---
+Explanation:
+Linux lets you control jobs by running them in the **foreground** (active in terminal) or the **background** (runs while terminal is free).
+
+---
+Job Control Commands:
+
+- List background jobs:
+  jobs
+
+Example Output:
+[1]+  Running                 ./script.sh &
+
+- Bring a job to foreground:
+  fg %1
+  (%1 = job number from jobs command)
+
+- If only one background job exists:
+  fg
+
+---
+Tips:
+- Pause a running job → `Ctrl + Z`
+- Resume in background → `bg %1`
+- Resume in foreground → `fg %1`
+
+---
+nohup Command
+---
+Explanation:
+The **nohup** command means **“no hang up”**.
+It lets a process keep running even after you **log out** or **close the terminal**.
+
+- Normally, logging out sends a **HUP (hangup)** signal and kills processes.
+- `nohup` detaches the process from the terminal so it ignores HUP.
+
+---
+Basic Usage:
+
+- Run script immune to logout (background):
+  nohup ./script.sh &
+
+(Default output is written to `nohup.out`)
+
+- Redirect output to a custom file:
+  nohup ./script.sh > output.log 2>&1 &
+
+(All stdout + stderr go into output.log)
+
+---
+✅ Summary:
+- **fg** → bring job to foreground
+- **bg** → resume job in background
+- **nohup** → make job immune to terminal close/logout
+
+---
+Optional: Difference Between nohup, disown, screen/tmux
+---
+- **nohup** → keeps process alive after logout, sends output to `nohup.out`
+- **disown** (in bash) → removes job from shell’s job table, so it won’t get HUP
+- **screen/tmux** → full terminal multiplexers, let you detach/reattach sessions
+
+---
+LVM (Logical Volume Manager)
+---
+Explanation:
+LVM is a storage management system in Linux that provides flexibility in managing disk space.
+It acts as an **abstraction layer** between physical storage (disks/partitions) and the filesystem.
+
+---
+Key Points:
+- **PV (Physical Volume):** Actual disk/partition (e.g., /dev/sda1)
+- **VG (Volume Group):** Storage pool made from one or more PVs
+- **LV (Logical Volume):** Partition-like units created from VGs, used by filesystems
+
+---
+Benefits of LVM:
+- **Flexible resizing:** Increase/decrease volume size without downtime
+- **Combine multiple disks:** Treat several disks as one large pool
+- **Snapshots:** Create point-in-time copies (useful for backups)
+- **Dynamic allocation:** Add/remove storage on the fly
+- **Better disk utilization:** Prevents wasted space compared to fixed partitions
+
+---
+Basic Structure:
+PV (Physical Volume) → VG (Volume Group) → LV (Logical Volume)
+
+Example Flow:
+/dev/sdb1 → PV → VG (my_vg) → LV (my_lv) → mount → filesystem
+
+---
+Example Commands:
+# Create PV
+pvcreate /dev/sdb1
+
+# Create VG
+vgcreate my_vg /dev/sdb1
+
+# Create LV (10G)
+lvcreate -L 10G -n my_lv my_vg
+
+# Format LV
+mkfs.ext4 /dev/my_vg/my_lv
+
+# Mount LV
+mount /dev/my_vg/my_lv /mnt
+
+---
+✅ Summary:
+LVM = Flexible disk management (resize, combine disks, snapshots, better utilization).
+---
+.bashrc vs .bash_profile
+---
+Explanation:
+In Linux, **.bashrc** and **.bash_profile** configure your shell environment but are used differently.
+
+1. **.bashrc**
+- Runs every time a new interactive shell is opened.
+- Typically used to set:
+  • Aliases (e.g., alias ll='ls -la')
+  • Functions
+  • Shell prompt (PS1)
+  • Environment variables for interactive shells
+- Location: `~/.bashrc`
+
+Example:
+alias gs='git status'
+export PATH=$PATH:/home/user/bin
+
+2. **.bash_profile** (or `.profile` on some systems)
+- Runs only for login shells (like SSH or console login).
+- Typically used to:
+  • Set environment variables
+  • Start programs at login
+  • Source `.bashrc` for consistency
+
+Common usage:
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
+
+✅ Summary:
+- `.bash\\\_profile` → login shell settings.
+- `.bashrc` → interactive shell settings.
+- `.bash\\\_profile` usually sources `.bashrc`.
+---
+Bash History
+---
+Explanation:
+Bash history keeps a record of executed commands.
+
+Important Variables:
+- `$HISTFILE` → File storing history (default: `~/.bash\\\_history`)
+- `$HISTSIZE` → Number of commands kept in memory for current session
+- `$HISTFILESIZE` → Max number of commands in history file
+
+Examples:
+echo $HISTFILE      --> Show history file path
+echo $HISTSIZE      --> Show session history size
+echo $HISTFILESIZE  --> Show file history size
+
+Useful Commands:
+history           --> Show history
+!42               --> Run command number 42
+ctrl+r            --> Search history (reverse)
+history -c        --> Clear history
+
+Tip:
+To immediately save commands across sessions:
+PROMPT_COMMAND='history -a'
+---
