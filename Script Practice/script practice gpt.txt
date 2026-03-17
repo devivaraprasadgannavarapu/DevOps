@@ -1,0 +1,154 @@
+#!/bin/bash
+	
+log_file="/tmp/service_monitor.log"
+
+if [ ! -f "$log_file" ]; then
+	touch $logfile
+fi
+
+check_service () {
+
+	stamp=$(date "+%Y-%m-%d %H:%M:%S")
+
+	if systemctl is-active --quiet "$1"
+	then
+		echo "$stamp $1 is running" >> $log_file
+	else
+		echo "$stamp $1 is not running" >> $log_file
+	fi
+}
+
+for service in nginx docker sshd
+do
+	check_service "$service"
+done
+---------------------------------------------------------------------
+
+#!/bin/bash
+
+# create log file if missing
+
+log_file="/tmp/service_recovery.log"
+
+if [ ! -f "$log_file" ]; then
+	touch "$log_file"
+fi
+
+check_service () {
+
+	stamp=$(date "+%Y-%m-%d %H:%M:%S")
+
+	if systemctl is-active --quiet "$1"
+	then
+		echo "$stamp $1 is running" >> "$log_file"
+	else
+		systemctl restart "$1"
+		echo "$stamp $1 was stopped and restarted" >> "$log_file"
+	fi
+
+}
+
+for service in nginx docker sshd
+do
+	check_service "$service"
+done
+----------------------------------------------------------------------------
+
+#!/bin/bash
+
+log_file="/tmp/disk_alert.log"
+
+if [ ! -f "$log_file" ]; then
+	touch "$log_file"
+fi
+
+stamp=$(date "+%Y-%m-%d %H:%M:%S")
+
+usage=$(df -h / | tail -1 | awk '{print $(NF-1)}' | sed 's/%//')
+
+if [ $usage -gt 80 ];
+then
+	echo "$stamp WARNING: Disk usage is $usage%" >> "$log_file"
+else
+	echo "$stamp Disk usage normal: $usage%" >> "$log_file"
+fi
+-----------------------------------------------------------------------------
+
+#!/bin/bash
+
+log_dir="/var/log/myapp"
+log_file="/tmp/log_cleanup.log"
+
+# create log file if missing
+if [ ! -f "$log_file" ]; then
+    touch "$log_file"
+fi
+
+# check directory exists
+if [ ! -d "$log_dir" ]; then
+    echo "Directory does not exist"
+    exit 1
+fi
+
+# find and delete files older than 30 days
+find "$log_dir" -type f -mtime +30 | while read file
+do
+    stamp=$(date "+%Y-%m-%d %H:%M:%S")
+    rm "$file"
+    echo "$stamp Deleted $file" >> "$log_file"
+done
+----------------------------------------------------------------------------	
+
+
+#!/bin/bash
+
+log_file="/tmp/disk_monitor.log"
+
+if [ ! -f "$log_file" ]; then
+    touch "$log_file"
+fi
+
+stamp=$(date "+%Y-%m-%d %H:%M:%S")
+
+usage=$(df -h / | awk 'NR==2 {print $5}' | sed 's/%//')
+
+if [ "$usage" -gt 80 ]; then
+    echo "$stamp WARNING disk usage high: $usage%" >> "$log_file"
+else
+    echo "$stamp Disk usage normal: $usage%" >> "$log_file"
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
